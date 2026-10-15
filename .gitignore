@@ -5,3 +5,7 @@ frontend/dist
 .tools/
 e2e-out/
 scancli.db*
+
+# Yerel çalışma notları (depoya gönderilmez)
+CLAUDE.md
+plan.md
