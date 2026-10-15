@@ -223,5 +223,4 @@ cmd/scancli            tarama motorunu arayüzsüz deneme ve ölçme aracı
 cmd/genicon            uygulama simgesini (build/appicon.png) çizer
 frontend/src           React arayüzü (api.ts: Go ile tek bağlantı noktası)
 frontend/e2e           uçtan uca testler
-plan.md                faz faz çalışma planı ve durumu
 ```
