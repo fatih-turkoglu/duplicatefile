@@ -1,0 +1,362 @@
+# DuplicateFile language file — English (template for translations)
+#
+# This file is generated from frontend/src/i18n/en.ts (npm run lang:en);
+# English is built into the program, so this file is only a template.
+#
+# How to translate:
+#   1. Copy this file and name it after the language code, e.g. it.lng, es.lng, pt-br.lng
+#   2. Set @name (the language's own name) and @locale (for number/date formats)
+#   3. Translate the text after "=". Keep the keys and {placeholders} unchanged.
+#   4. Put the file into the "lang" folder next to DuplicateFile.exe.
+#
+# Format: UTF-8, one "key = text" per line. Lines starting with # are comments.
+#   \n = new line.  Missing keys are shown in English.
+#   Number-dependent texts have plural suffixes; use the forms your language needs:
+#   .zero .one .two .few .many .other  (.other is required). See CLDR plural rules.
+
+@name = English
+@locale = en-US
+
+app.tagline = Duplicate and similar file finder
+
+common.cancel = Cancel
+common.close = Close
+common.ok = OK
+common.starting = Starting…
+
+nav.scan = Scan
+nav.results = Duplicates
+nav.settings = Settings
+
+theme.system = System
+theme.light = Light
+theme.dark = Dark
+theme.tooltip = Theme: {current} (click for {next})
+theme.change = Change theme
+
+unit.B = B
+unit.KB = KB
+unit.MB = MB
+unit.GB = GB
+unit.TB = TB
+
+duration.ms = {n} ms
+duration.s = {n} s
+duration.minSec = {m} min {s} s
+duration.hourMin = {h} h {m} min
+
+crash.title = Something went wrong
+crash.text = Reload the interface to continue; your files and records are not affected.
+crash.reload = Reload
+
+scan.title = Scan
+scan.failed = The scan could not be performed: {error}
+scan.roots.title = Folders to scan
+scan.roots.add = Add folder
+scan.roots.dialog = Choose a folder to scan
+scan.roots.empty = No folder selected yet. You can add several folders; duplicates across them are found too.
+scan.mode.title = What to look for?
+scan.mode.exact = Exact duplicates
+scan.mode.similar = Similar images
+scan.mode.exactHelp = Finds files whose contents are byte-for-byte identical.
+scan.mode.similarHelp = Finds resized, recompressed or slightly edited photos. Only JPG, PNG, GIF, BMP, TIFF and WebP are scanned (HEIC is not supported).
+scan.threshold.label = Similarity threshold: {value}
+scan.threshold.strict = Strict
+scan.threshold.similar = Similar
+scan.threshold.loose = Loose
+scan.threshold.help = A lower value finds fewer but more certain matches; a higher value may also match different photos.
+scan.options.title = Options
+scan.minSize.label = File size
+scan.minSize.help = Skipping small files speeds up the scan.
+scan.minSize.all = All files
+scan.minSize.atLeast = {size} and larger
+scan.ext.label = File types
+scan.ext.placeholder = e.g. type jpg and press Enter
+scan.ext.help = If empty, all file types are scanned.
+scan.ext.images = Images
+scan.ext.videos = Videos
+scan.ext.music = Music
+scan.ext.documents = Documents
+scan.ext.archives = Archives
+scan.ext.clear = Clear
+scan.skipHidden = Skip hidden and system files
+scan.exclude.title = Excluded folders
+scan.exclude.add = Add excluded folder
+scan.exclude.dialog = Choose a folder to exclude from the scan
+scan.exclude.empty = None. The selected folders are scanned with all their subfolders.
+scan.start = Start scan
+
+folder.remove = Remove from list
+folder.removeAria = Remove folder {path}
+
+scan.stage.walk = Listing files
+scan.stage.walkImages = Listing images
+scan.stage.partial = Quick comparison
+scan.stage.full = Content comparison
+scan.stage.image = Analyzing images
+scan.stage.cleanup = Removed records
+scan.stage.save = Saving
+scan.progress.step = Step {n}/{total}: {label}
+scan.progress.found.one = {count} file found
+scan.progress.found.other = {count} files found
+scan.progress.files = {done} / {total} files
+scan.stop = Stop
+scan.stopping = Stopping…
+scan.stopHint = If you stop, everything computed so far is saved; the next scan quickly continues from there.
+
+summary.completed = Scan completed
+summary.stopped = Scan stopped
+summary.stoppedInfo = The computed information was saved. Restart the scan to see the duplicates; files already read are not read again.
+summary.groups = Duplicate groups
+summary.groupsSimilar = Similar image groups
+summary.wasted = Reclaimable space
+summary.dupFiles = Duplicate files
+summary.dupFilesSimilar = Images in groups
+summary.scanned = Files scanned
+summary.scannedSimilar = Images scanned
+summary.cached = From cache
+summary.read = Read
+summary.readValue.one = {count} file · {bytes}
+summary.readValue.other = {count} files · {bytes}
+summary.duration = Duration
+summary.removed = Records cleaned up
+summary.errors.one = {count} file or folder could not be accessed
+summary.errors.other = {count} files or folders could not be accessed
+summary.errorsTruncated = Showing the first {count} errors.
+summary.show = Show duplicates
+summary.showSimilar = Show similar images
+summary.none = No duplicates found
+summary.noneSimilar = No similar images found
+
+scanError.changed = The file changed during the scan
+scanError.image_unreadable = The image could not be read
+scanError.image_too_large = The image is too large
+
+results.title = Duplicates
+results.explorerFailed = Could not open Explorer: {error}
+results.opFailed = The operation failed: {error}
+results.folderSelected.one = {count} file selected.
+results.folderSelected.other = {count} files selected.
+results.folderSkipped.one = In {count} group all copies are in this folder, so one was left unselected.
+results.folderSkipped.other = In {count} groups all copies are in this folder, so one was left unselected.
+results.none = No duplicates found
+results.noneText = There are no files with identical content in the selected folders.
+results.noneSimilarText = There are no similar images in the selected folders.
+results.empty = No results yet
+results.emptyText = Start a scan to see duplicate files.
+results.goScan = Go to scan
+results.saved = These results were saved by an earlier scan; files may have changed or been deleted since.
+results.rescan = Rescan
+results.dangerous.one = {count} group has all files selected. If they are deleted, nothing remains from that group.
+results.dangerous.other = {count} groups have all files selected. If they are deleted, nothing remains from these groups.
+results.noMatch = No files match “{query}”.
+
+toolbar.groups.one = {count} group
+toolbar.groups.other = {count} groups
+toolbar.files.one = {count} file
+toolbar.files.other = {count} files
+toolbar.wasted = {bytes} reclaimable
+toolbar.selected.one = {count} file selected · {bytes}
+toolbar.selected.other = {count} files selected · {bytes}
+toolbar.search = Search files or folders
+toolbar.sort = Sort
+
+sort.wasted = Reclaimable space
+sort.size = File size
+sort.count = Number of copies
+
+select.button = Select
+select.filteredNote = Applies only to groups matching the search.
+select.keepLargest = Keep the highest resolution in each group
+select.keepLargestHelp = Selects the other images
+select.keepNewest = Keep the newest in each group
+select.keepOldest = Keep the oldest in each group
+select.othersHelp = Selects the other copies
+select.inFolder = Select copies in a folder…
+select.clear = Clear selection
+
+actions.delete = Delete
+actions.move = Move
+actions.rename = Rename
+
+group.exact.one = {count} copy · {size} each
+group.exact.other = {count} copies · {size} each
+group.similar.one = {count} similar image · {size} in total
+group.similar.other = {count} similar images · {size} in total
+group.wasted = Reclaimable: {bytes}
+group.allSelected = All selected
+group.allSelectedTip = All files in this group are selected; if they are deleted, none remains.
+group.selected = {selected}/{total} selected
+group.compare = Compare
+
+file.similarity = {percent}% similar
+file.select = Select {path}
+file.showInExplorer = Show in Explorer
+file.showInExplorerAria = Show {path} in Explorer
+
+compare.title.one = {count} similar image
+compare.title.other = {count} similar images
+compare.allSelected = All images are selected; leave at least one.
+compare.selectedInfo = {count} selected · selected files are marked for deleting, moving or renaming
+compare.highestRes = Highest resolution
+compare.select = Select {path} in comparison
+
+folderSelect.title = Select copies in a folder
+folderSelect.text = Copies in the selected folder (including subfolders) are marked. If all copies of a file are in this folder, one is left unmarked.
+folderSelect.label = Folder
+folderSelect.placeholder = Type to search
+folderSelect.files.one = {count} file
+folderSelect.files.other = {count} files
+folderSelect.browse = Browse…
+folderSelect.dialog = Folder whose copies to select
+folderSelect.confirm = Select
+
+delete.title.one = Delete {count} file?
+delete.title.other = Delete {count} files?
+delete.permanentText = {bytes} will be permanently deleted. This cannot be undone.
+delete.recycleText = {bytes} will be sent to the Recycle Bin; you can restore it from there if needed.
+delete.fullyWarning.one = {count} group has all copies selected. For safety, files in that group will not be deleted.
+delete.fullyWarning.other = {count} groups have all copies selected. For safety, files in these groups will not be deleted.
+delete.permanentCheck = Do not use the Recycle Bin, delete permanently
+delete.confirmPermanent = Delete permanently
+delete.confirmRecycle = Send to Recycle Bin
+
+move.title.one = Move {count} file
+move.title.other = Move {count} files
+move.target = Target folder
+move.notSelected = Not selected
+move.change = Change
+move.choose = Choose folder
+move.dialog = Folder to move the files to
+move.conflict = If a file with the same name exists at the target
+move.conflictRename = Give it a new name (e.g. photo (2).jpg)
+move.conflictSkip = Do not move that file
+move.note = No existing file is ever overwritten. Moved files stay in the list at their new location.
+move.confirm = Move
+
+progress.delete = Deleting…
+progress.move = Moving…
+progress.rename = Renaming…
+progress.files = {done} / {total} files
+
+outcome.deletedPermanent.one = {count} file permanently deleted
+outcome.deletedPermanent.other = {count} files permanently deleted
+outcome.recycled.one = {count} file sent to the Recycle Bin
+outcome.recycled.other = {count} files sent to the Recycle Bin
+outcome.moved.one = {count} file moved
+outcome.moved.other = {count} files moved
+outcome.renamed.one = {count} file renamed
+outcome.renamed.other = {count} files renamed
+
+report.title = {ok} succeeded, {failed} failed
+report.noRecycle.one = {count} file is on a drive without a Recycle Bin (network drive, USB stick). It can only be deleted permanently.
+report.noRecycle.other = {count} files are on a drive without a Recycle Bin (network drive, USB stick). They can only be deleted permanently.
+report.warnings.one = {count} file was processed but its database record could not be updated; this is fixed by the next scan.
+report.warnings.other = {count} files were processed but their database records could not be updated; this is fixed by the next scan.
+report.retryPermanent = Delete these permanently
+
+rename.titleOne = Rename
+rename.titleMany.one = Rename {count} file
+rename.titleMany.other = Rename {count} files
+rename.newName = New name
+rename.template = Name template
+rename.defaultTemplate = {name} (copy){ext}
+rename.token.name = Name
+rename.token.nameHelp = file name without extension
+rename.token.ext = Extension
+rename.token.extHelp = including the dot, e.g. .jpg
+rename.token.n = Number
+rename.token.nHelp = 1, 2, 3… in selection order
+rename.invalidCount.one = {count} file has an invalid new name.
+rename.invalidCount.other = {count} files have an invalid new name.
+rename.preview = Preview
+rename.more.one = … and {count} more file
+rename.more.other = … and {count} more files
+rename.confirm = Rename
+rename.error.empty = The name cannot be empty.
+rename.error.trailing = The name cannot end with a space or a dot.
+rename.error.chars = The name cannot contain: < > : " / \\ | ? *
+rename.error.reserved = {name} is a reserved name in Windows.
+rename.error.unchanged = The name does not change.
+rename.error.duplicate = Another file in the same folder gets this name; add {n} to the template.
+
+settings.title = Settings
+settings.appearance = Appearance
+settings.theme = Theme
+settings.language = Language
+settings.languageAuto = Automatic ({name})
+settings.languageHelp = Language files are read from the “lang” folder next to the program: {dir}
+settings.scan = Scan
+settings.workers = Files read at the same time
+settings.workersHelp = On classic hard disks, 1 can be faster because the disk head does not jump between files.
+settings.workers.auto = Automatic
+settings.workers.hdd = 1 (classic hard disk / HDD)
+settings.workers.ssd = 8 (fast SSD)
+settings.resetScan = Reset scan options to defaults
+settings.resetDone = Scan options were reset to defaults.
+settings.db = Database
+settings.dbOpenFailed = The database could not be opened: {error}
+settings.dbFallback = The configured database could not be opened ({error}); the default location is used.
+settings.dbDefault = Default location
+settings.dbCustom = Custom location
+settings.dbRecords.one = {count} file record
+settings.dbRecords.other = {count} file records
+settings.dbScans.one = {count} scan
+settings.dbScans.other = {count} scans
+settings.showFolder = Show in folder
+settings.moveDb = Move to another folder…
+settings.moveDbDialog = Folder to move the database to
+settings.moveDefault = Move to default location
+settings.moved = Database moved: {path}
+settings.maintenance = Maintenance
+settings.maintenanceText = The database stores information about scanned files so that repeated scans are faster. Maintenance cannot run while a scan or file operation is in progress.
+settings.compactTitle = Compact database
+settings.compactText = Returns the space left by deleted records to the disk.
+settings.compactAction = Compact
+settings.compactDone = Compacted: {before} → {after}
+settings.pruneTitle = Clean up records of deleted files
+settings.pruneText = Removes records of files that no longer exist on disk. Records on drives that are not connected are kept.
+settings.pruneAction = Clean up records
+settings.pruneDone.one = {count} record cleaned up.
+settings.pruneDone.other = {count} records cleaned up.
+settings.pruneNone = No records to clean up.
+settings.clearTitle = Clear the cache completely
+settings.clearText = Deletes all records. The next scan reads all files again; your files are not touched.
+settings.clearAction = Clear cache
+settings.clearConfirmTitle = Clear the cache?
+settings.clearConfirmCount.one = {count} file record will be deleted.
+settings.clearConfirmCount.other = {count} file records will be deleted.
+settings.clearConfirmText = Your files are not touched, but the next scan takes longer because it reads all files again. The results on screen are removed as well.
+settings.clearConfirm = Clear
+settings.clearDone = Cache cleared.
+settings.taskFailed = {task} failed: {error}
+settings.task.move = Moving the database
+settings.task.compact = Compacting
+settings.task.prune = Cleaning up
+settings.task.clear = Clearing the cache
+settings.about = About
+settings.version = version {version}
+settings.devVersion = (development version)
+
+error.busy = Another scan, file operation or database maintenance is in progress.
+error.db_unavailable = The database is not open.
+error.db_target_exists = A database already exists in the target folder.
+error.path_not_absolute = The path must be absolute.
+error.root_invalid = Invalid folder
+error.root_not_found = Folder not found
+error.root_not_dir = Not a folder
+error.root_unreadable = The folder could not be read
+error.no_roots = No folder selected to scan.
+
+opError.exists = A file with the same name exists at the target.
+opError.invalid_name = Invalid file name.
+opError.no_recycle_bin = This drive has no Recycle Bin.
+opError.cancelled = The operation was cancelled.
+opError.last_copy = Not deleted: no other copy of this file would remain.
+opError.unverified = Could not verify that this file has a copy; rescan the folder.
+opError.same_folder = The file is already in the target folder.
+opError.not_regular = Only regular files can be processed.
+opError.dest_invalid = Invalid target folder.
+opError.path_not_absolute = The path must be absolute.
+opError.not_found = The file no longer exists.
+opError.access_denied = Access denied.

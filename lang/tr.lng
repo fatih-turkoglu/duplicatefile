@@ -1,0 +1,321 @@
+# DuplicateFile dil dosyası — Türkçe
+# Biçim: "anahtar = metin"; # ile başlayan satırlar yorumdur. {ad} yer tutucuları değiştirilmez.
+# Türkçede sayıya göre çoğul değişmediği için yalnızca .other biçimi kullanılır.
+
+@name = Türkçe
+@locale = tr-TR
+
+app.tagline = Kopya ve benzer dosya bulucu
+
+common.cancel = Vazgeç
+common.close = Kapat
+common.ok = Tamam
+common.starting = Başlatılıyor…
+
+nav.scan = Tara
+nav.results = Kopyalar
+nav.settings = Ayarlar
+
+theme.system = Sistem
+theme.light = Açık
+theme.dark = Koyu
+theme.tooltip = Tema: {current} ({next} için tıklayın)
+theme.change = Temayı değiştir
+
+unit.B = B
+unit.KB = KB
+unit.MB = MB
+unit.GB = GB
+unit.TB = TB
+
+duration.ms = {n} ms
+duration.s = {n} sn
+duration.minSec = {m} dk {s} sn
+duration.hourMin = {h} sa {m} dk
+
+crash.title = Beklenmeyen bir hata oluştu
+crash.text = Arayüz yeniden yüklenince devam edebilirsiniz; dosyalarınız ve kayıtlar etkilenmez.
+crash.reload = Yeniden yükle
+
+scan.title = Tara
+scan.failed = Tarama yapılamadı: {error}
+scan.roots.title = Taranacak klasörler
+scan.roots.add = Klasör ekle
+scan.roots.dialog = Taranacak klasörü seçin
+scan.roots.empty = Henüz klasör seçilmedi. Birden fazla klasör ekleyebilirsiniz; aralarındaki kopyalar da bulunur.
+scan.mode.title = Ne aranacak?
+scan.mode.exact = Birebir kopyalar
+scan.mode.similar = Benzer görseller
+scan.mode.exactHelp = İçeriği bayt bayt aynı olan dosyalar bulunur.
+scan.mode.similarHelp = Yeniden boyutlandırılmış, sıkıştırılmış ya da hafif düzenlenmiş fotoğraflar bulunur. Yalnızca JPG, PNG, GIF, BMP, TIFF ve WebP taranır (HEIC desteklenmez).
+scan.threshold.label = Benzerlik eşiği: {value}
+scan.threshold.strict = Çok sıkı
+scan.threshold.similar = Benzer
+scan.threshold.loose = Gevşek
+scan.threshold.help = Düşük değer daha az ama daha kesin eşleşme bulur; yüksek değer farklı fotoğrafları da eşleştirebilir.
+scan.options.title = Seçenekler
+scan.minSize.label = Dosya boyutu
+scan.minSize.help = Küçük dosyaları atlamak taramayı hızlandırır.
+scan.minSize.all = Tüm dosyalar
+scan.minSize.atLeast = {size} ve üstü
+scan.ext.label = Dosya türleri
+scan.ext.placeholder = Örn. jpg yazıp Enter’a basın
+scan.ext.help = Boş bırakılırsa tüm dosya türleri taranır.
+scan.ext.images = Resimler
+scan.ext.videos = Videolar
+scan.ext.music = Müzik
+scan.ext.documents = Belgeler
+scan.ext.archives = Arşivler
+scan.ext.clear = Temizle
+scan.skipHidden = Gizli ve sistem dosyalarını atla
+scan.exclude.title = Hariç tutulan klasörler
+scan.exclude.add = Hariç klasör ekle
+scan.exclude.dialog = Taramaya dahil edilmeyecek klasörü seçin
+scan.exclude.empty = Yok. Seçilen klasörlerin tamamı alt klasörleriyle birlikte taranır.
+scan.start = Taramayı başlat
+
+folder.remove = Listeden çıkar
+folder.removeAria = {path} klasörünü çıkar
+
+scan.stage.walk = Dosyalar listeleniyor
+scan.stage.walkImages = Görseller listeleniyor
+scan.stage.partial = Hızlı karşılaştırma
+scan.stage.full = İçerik karşılaştırma
+scan.stage.image = Görseller inceleniyor
+scan.stage.cleanup = Silinmiş kayıtlar
+scan.stage.save = Kaydediliyor
+scan.progress.step = Aşama {n}/{total}: {label}
+scan.progress.found.other = {count} dosya bulundu
+scan.progress.files = {done} / {total} dosya
+scan.stop = Durdur
+scan.stopping = Durduruluyor…
+scan.stopHint = Durdurursanız o ana kadar hesaplanan bilgiler kaydedilir; sonraki tarama kaldığı yerden hızlıca devam eder.
+
+summary.completed = Tarama tamamlandı
+summary.stopped = Tarama durduruldu
+summary.stoppedInfo = Hesaplanan bilgiler kaydedildi. Kopyaları görmek için taramayı yeniden başlatın; daha önce okunan dosyalar tekrar okunmaz.
+summary.groups = Kopya grubu
+summary.groupsSimilar = Benzer görsel grubu
+summary.wasted = Kazanılabilir alan
+summary.dupFiles = Kopya dosya
+summary.dupFilesSimilar = Gruplardaki görsel
+summary.scanned = Taranan dosya
+summary.scannedSimilar = Taranan görsel
+summary.cached = Önbellekten gelen
+summary.read = Okunan
+summary.readValue.other = {count} dosya · {bytes}
+summary.duration = Süre
+summary.removed = Temizlenen kayıt
+summary.errors.other = {count} dosya ya da klasöre erişilemedi
+summary.errorsTruncated = İlk {count} hata gösteriliyor.
+summary.show = Kopyaları göster
+summary.showSimilar = Benzerleri göster
+summary.none = Kopya bulunamadı
+summary.noneSimilar = Benzer görsel bulunamadı
+
+scanError.changed = Dosya tarama sırasında değişti
+scanError.image_unreadable = Görsel okunamadı
+scanError.image_too_large = Görsel çok büyük
+
+results.title = Kopyalar
+results.explorerFailed = Gezgin açılamadı: {error}
+results.opFailed = İşlem yapılamadı: {error}
+results.folderSelected.other = {count} dosya seçildi.
+results.folderSkipped.other = {count} grupta bütün kopyalar bu klasörde olduğu için biri seçilmeden bırakıldı.
+results.none = Kopya bulunamadı
+results.noneText = Seçilen klasörlerde içeriği aynı olan dosya yok.
+results.noneSimilarText = Seçilen klasörlerde benzer görsel yok.
+results.empty = Henüz sonuç yok
+results.emptyText = Kopya dosyaları görmek için bir tarama başlatın.
+results.goScan = Taramaya git
+results.saved = Bu sonuçlar önceki taramadan kaydedilmiş bilgilerdir; o zamandan beri değişen ya da silinen dosyalar olabilir.
+results.rescan = Yeniden tara
+results.dangerous.other = {count} grupta bütün dosyalar seçili. Bunlar silinirse gruptan hiçbir dosya kalmaz.
+results.noMatch = “{query}” ile eşleşen dosya yok.
+
+toolbar.groups.other = {count} grup
+toolbar.files.other = {count} dosya
+toolbar.wasted = {bytes} kazanılabilir
+toolbar.selected.other = {count} dosya seçili · {bytes}
+toolbar.search = Dosya ya da klasör ara
+toolbar.sort = Sırala
+
+sort.wasted = Kazanılabilir alan
+sort.size = Dosya boyutu
+sort.count = Kopya sayısı
+
+select.button = Seç
+select.filteredNote = Yalnızca aramayla eşleşen gruplara uygulanır.
+select.keepLargest = Her grupta en yüksek çözünürlüklüyü tut
+select.keepLargestHelp = Diğer görselleri seçer
+select.keepNewest = Her grupta en yeniyi tut
+select.keepOldest = Her grupta en eskiyi tut
+select.othersHelp = Diğer kopyaları seçer
+select.inFolder = Klasördeki kopyaları seç…
+select.clear = Seçimi temizle
+
+actions.delete = Sil
+actions.move = Taşı
+actions.rename = Yeniden adlandır
+
+group.exact.other = {count} kopya · her biri {size}
+group.similar.other = {count} benzer görsel · toplam {size}
+group.wasted = Kazanılabilir: {bytes}
+group.allSelected = Tümü seçili
+group.allSelectedTip = Bu gruptaki bütün dosyalar seçili; silinirse hiçbiri kalmaz.
+group.selected = {selected}/{total} seçili
+group.compare = Karşılaştır
+
+file.similarity = %{percent} benzer
+file.select = {path} seç
+file.showInExplorer = Gezgin'de göster
+file.showInExplorerAria = {path} dosyasını Gezgin'de göster
+
+compare.title.other = {count} benzer görsel
+compare.allSelected = Bütün görseller seçili; en az birini bırakın.
+compare.selectedInfo = {count} seçili · seçilenler silinmek, taşınmak ya da yeniden adlandırılmak üzere işaretlenir
+compare.highestRes = En yüksek çözünürlük
+compare.select = {path} karşılaştırmada seç
+
+folderSelect.title = Klasördeki kopyaları seç
+folderSelect.text = Seçilen klasördeki (alt klasörler dahil) kopyalar işaretlenir. Bir dosyanın bütün kopyaları bu klasördeyse biri işaretlenmeden bırakılır.
+folderSelect.label = Klasör
+folderSelect.placeholder = Aramak için yazın
+folderSelect.files.other = {count} dosya
+folderSelect.browse = Gözat…
+folderSelect.dialog = Kopyaları seçilecek klasör
+folderSelect.confirm = Seç
+
+delete.title.other = {count} dosya silinsin mi?
+delete.permanentText = {bytes} kalıcı olarak silinecek. Bu işlem geri alınamaz.
+delete.recycleText = {bytes} Geri Dönüşüm Kutusu'na gönderilecek; gerekirse oradan geri yükleyebilirsiniz.
+delete.fullyWarning.other = {count} grupta bütün kopyalar seçili. Güvenlik nedeniyle bu gruplardaki dosyalar silinmeyecek.
+delete.permanentCheck = Geri Dönüşüm Kutusu'nu kullanma, kalıcı olarak sil
+delete.confirmPermanent = Kalıcı olarak sil
+delete.confirmRecycle = Geri Dönüşüm Kutusu'na gönder
+
+move.title.other = {count} dosyayı taşı
+move.target = Hedef klasör
+move.notSelected = Seçilmedi
+move.change = Değiştir
+move.choose = Klasör seç
+move.dialog = Dosyaların taşınacağı klasör
+move.conflict = Hedefte aynı adlı dosya varsa
+move.conflictRename = Yeni ad ver (ör. foto (2).jpg)
+move.conflictSkip = O dosyayı taşıma
+move.note = Var olan hiçbir dosyanın üzerine yazılmaz. Taşınan dosyalar listede yeni konumlarıyla kalır.
+move.confirm = Taşı
+
+progress.delete = Siliniyor…
+progress.move = Taşınıyor…
+progress.rename = Yeniden adlandırılıyor…
+progress.files = {done} / {total} dosya
+
+outcome.deletedPermanent.other = {count} dosya kalıcı olarak silindi
+outcome.recycled.other = {count} dosya Geri Dönüşüm Kutusu'na gönderildi
+outcome.moved.other = {count} dosya taşındı
+outcome.renamed.other = {count} dosya yeniden adlandırıldı
+
+report.title = {ok} başarılı, {failed} başarısız
+report.noRecycle.other = {count} dosya Geri Dönüşüm Kutusu olmayan bir sürücüde (ağ sürücüsü, USB bellek). Bunları yalnızca kalıcı olarak silebilirsiniz.
+report.warnings.other = {count} dosyanın işlemi yapıldı ancak veritabanı kaydı güncellenemedi; bir sonraki taramada düzelir.
+report.retryPermanent = Bunları kalıcı olarak sil
+
+rename.titleOne = Yeniden adlandır
+rename.titleMany.other = {count} dosyayı yeniden adlandır
+rename.newName = Yeni ad
+rename.template = Ad şablonu
+rename.defaultTemplate = {name} (kopya){ext}
+rename.token.name = Ad
+rename.token.nameHelp = uzantısız dosya adı
+rename.token.ext = Uzantı
+rename.token.extHelp = noktasıyla birlikte, ör. .jpg
+rename.token.n = Sayı
+rename.token.nHelp = seçim sırasına göre 1, 2, 3…
+rename.invalidCount.other = {count} dosyanın yeni adı geçersiz.
+rename.preview = Önizleme
+rename.more.other = … ve {count} dosya daha
+rename.confirm = Yeniden adlandır
+rename.error.empty = Ad boş olamaz.
+rename.error.trailing = Ad boşluk ya da nokta ile bitemez.
+rename.error.chars = Ad şu karakterleri içeremez: < > : " / \\ | ? *
+rename.error.reserved = {name} Windows'ta ayrılmış bir addır.
+rename.error.unchanged = Ad değişmiyor.
+rename.error.duplicate = Aynı klasörde başka bir dosya da bu adı alıyor; şablona {n} ekleyin.
+
+settings.title = Ayarlar
+settings.appearance = Görünüm
+settings.theme = Tema
+settings.language = Dil
+settings.languageAuto = Otomatik ({name})
+settings.languageHelp = Dil dosyaları programın yanındaki “lang” klasöründen okunur: {dir}
+settings.scan = Tarama
+settings.workers = Aynı anda okunan dosya
+settings.workersHelp = Klasik sabit disklerde 1, disk kafasının dosyalar arasında gidip gelmesini önlediği için daha hızlı olabilir.
+settings.workers.auto = Otomatik
+settings.workers.hdd = 1 (klasik sabit disk / HDD için)
+settings.workers.ssd = 8 (hızlı SSD için)
+settings.resetScan = Tarama seçeneklerini varsayılana döndür
+settings.resetDone = Tarama seçenekleri varsayılana döndürüldü.
+settings.db = Veritabanı
+settings.dbOpenFailed = Veritabanı açılamadı: {error}
+settings.dbFallback = Ayarlanan veritabanı açılamadı ({error}); varsayılan konum kullanılıyor.
+settings.dbDefault = Varsayılan konum
+settings.dbCustom = Özel konum
+settings.dbRecords.other = {count} dosya kaydı
+settings.dbScans.other = {count} tarama
+settings.showFolder = Klasörde göster
+settings.moveDb = Başka klasöre taşı…
+settings.moveDbDialog = Veritabanının taşınacağı klasör
+settings.moveDefault = Varsayılan konuma taşı
+settings.moved = Veritabanı taşındı: {path}
+settings.maintenance = Bakım
+settings.maintenanceText = Veritabanı, taranan dosyaların bilgisini saklayarak tekrarlı taramaları hızlandırır. Tarama ya da dosya işlemi sürerken bakım yapılamaz.
+settings.compactTitle = Veritabanını sıkıştır
+settings.compactText = Silinen kayıtlardan kalan boş alanı diske geri verir.
+settings.compactAction = Sıkıştır
+settings.compactDone = Sıkıştırıldı: {before} → {after}
+settings.pruneTitle = Silinmiş dosyaların kayıtlarını temizle
+settings.pruneText = Diskte artık bulunmayan dosyaların kayıtlarını siler. Takılı olmayan sürücülerdeki kayıtlara dokunulmaz.
+settings.pruneAction = Kayıtları temizle
+settings.pruneDone.other = {count} kayıt temizlendi.
+settings.pruneNone = Temizlenecek kayıt yok.
+settings.clearTitle = Önbelleği tamamen temizle
+settings.clearText = Bütün kayıtları siler. Sonraki taramada bütün dosyalar yeniden okunur; dosyalarınıza dokunulmaz.
+settings.clearAction = Önbelleği temizle
+settings.clearConfirmTitle = Önbellek temizlensin mi?
+settings.clearConfirmCount.other = {count} dosya kaydı silinecek.
+settings.clearConfirmText = Dosyalarınıza dokunulmaz, ancak sonraki tarama bütün dosyaları yeniden okuyacağı için uzun sürer. Ekrandaki sonuçlar da kaldırılır.
+settings.clearConfirm = Temizle
+settings.clearDone = Önbellek temizlendi.
+settings.taskFailed = {task} yapılamadı: {error}
+settings.task.move = Veritabanını taşıma
+settings.task.compact = Sıkıştırma
+settings.task.prune = Temizleme
+settings.task.clear = Önbellek temizleme
+settings.about = Hakkında
+settings.version = sürüm {version}
+settings.devVersion = (geliştirme sürümü)
+
+error.busy = Başka bir tarama, dosya işlemi ya da veritabanı bakımı sürüyor.
+error.db_unavailable = Veritabanı açık değil.
+error.db_target_exists = Hedef klasörde zaten bir veritabanı var.
+error.path_not_absolute = Yol tam olmalı.
+error.root_invalid = Geçersiz klasör
+error.root_not_found = Klasör bulunamadı
+error.root_not_dir = Bir klasör değil
+error.root_unreadable = Klasör okunamadı
+error.no_roots = Taranacak klasör seçilmedi.
+
+opError.exists = Hedefte aynı adlı bir dosya var.
+opError.invalid_name = Geçersiz dosya adı.
+opError.no_recycle_bin = Bu sürücüde Geri Dönüşüm Kutusu yok.
+opError.cancelled = İşlem iptal edildi.
+opError.last_copy = Silinirse dosyanın hiçbir kopyası kalmayacağı için silinmedi.
+opError.unverified = Dosyanın kopyası olduğu doğrulanamadı; klasörü yeniden tarayın.
+opError.same_folder = Dosya zaten hedef klasörde.
+opError.not_regular = Yalnızca normal dosyalar üzerinde işlem yapılabilir.
+opError.dest_invalid = Geçersiz hedef klasör.
+opError.path_not_absolute = Yol tam olmalı.
+opError.not_found = Dosya artık yok.
+opError.access_denied = Erişim engellendi.

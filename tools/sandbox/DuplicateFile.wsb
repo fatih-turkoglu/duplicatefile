@@ -1,0 +1,27 @@
+<!--
+  Temiz Windows testi: Windows Korumalı Alanı'nda (Windows Sandbox) uygulamayı açar.
+  Korumalı alan her açılışta sıfırdan başlar, kapatınca içindeki her şey silinir.
+
+  Gereksinim: "Windows Korumalı Alanı" özelliği açık olmalı (Windows 10/11 Pro;
+  yönetici yetkisi ve yeniden başlatma gerektirir):
+    Denetim Masası > Programlar > Windows özelliklerini aç veya kapat > Windows Korumalı Alanı
+
+  Kullanım: önce .\build.ps1 ile derleyin, sonra bu dosyaya çift tıklayın.
+  build\bin klasörü korumalı alanın masaüstüne SALT OKUNUR bağlanır ve uygulama açılır.
+  Kontrol listesi: README.md > "Temiz Windows'ta test".
+
+  HostFolder yolu bu proje D:\Project\DuplicateFile'da değilse güncellenmeli.
+-->
+<Configuration>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>D:\Project\DuplicateFile\build\bin</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\Desktop\DuplicateFile</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+    <Command>C:\Users\WDAGUtilityAccount\Desktop\DuplicateFile\DuplicateFile.exe</Command>
+  </LogonCommand>
+  <Networking>Disable</Networking>
+</Configuration>
