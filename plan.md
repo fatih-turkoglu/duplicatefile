@@ -136,6 +136,7 @@ Tamamlanan adımlar `[x]` ile işaretlenir. Faz başlıklarındaki durum:
 - [x] Üretim derlemesi ve boyut optimizasyonu: `build.ps1` (önce testler, `-trimpath`, sürüm); exe 17,5 → 16,7 MB; arayüz paketi 1.615 → 863 KB (Roboto yalnızca latin + latin-ext, woff2); exe'de yerel yol kalmadı. Wails zaten `-s -w` kullanıyordu; UPX bilinçli olarak kullanılmadı (antivirüs yanlış alarmları)
 - [ ] Temiz bir Windows'ta test — **yapılmadı**: Windows Korumalı Alanı bu bilgisayarda açık değil (açmak yönetici yetkisi + yeniden başlatma ister). Hazır yapılandırma `tools/sandbox/DuplicateFile.wsb` ve kontrol listesi README'de
 - [x] README: kullanım, güvenlik, veri konumları, bilinen sınırlar, geliştirme ortamı, testler, proje yapısı
+- [x] Kaynak kodu GitHub'a yüklendi: https://github.com/fatih-turkoglu/duplicatefile (git, `.tools\git`'te taşınabilir; derleme çıktıları ve araçlar `.gitignore` ile dışarıda)
 
 ## ✅ Faz 11 – Dil Desteği
 - [x] `.lng` biçimi (UTF-8 `anahtar = değer`, `@name`/`@locale`, yorum, `{yer tutucu}`, dile özgü çoğul ekleri) ve Go ayrıştırıcısı (`internal/i18n`) + testler; dil kodu doğrulanır (klasör dışına çıkılamaz)

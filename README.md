@@ -130,15 +130,16 @@ SQLite (saf Go, `modernc.org/sqlite`; CGO gerekmez).
 ### Ortam
 
 Araçlar sisteme kurulmaz; proje içindeki `.tools\` klasöründe taşınabilir olarak durur
-(Go, Node.js, Wails CLI, önbellekler). Her terminalde önce:
+(Go, Node.js, Wails CLI, Git, önbellekler). Her terminalde önce:
 
 ```powershell
 . .\env.ps1
 ```
 
-Bu yalnızca o terminal oturumunun `PATH`'ini ayarlar. `.tools\` yoksa: Go ve
-Node.js'in resmi Windows **zip** sürümlerini `.tools\go` ve `.tools\node`
-klasörlerine açın, sonra `go install github.com/wailsapp/wails/v2/cmd/wails@latest`.
+Bu yalnızca o terminal oturumunun `PATH`'ini ayarlar. `.tools\` yoksa (ör. depoyu yeni
+klonladıysanız): Go ve Node.js'in resmi Windows **zip** sürümlerini `.tools\go` ve
+`.tools\node` klasörlerine, isterseniz Git for Windows **PortableGit**'i `.tools\git`
+klasörüne açın; sonra `go install github.com/wailsapp/wails/v2/cmd/wails@latest`.
 
 ### Çalıştırma ve derleme
 
