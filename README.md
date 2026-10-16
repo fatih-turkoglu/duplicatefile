@@ -136,6 +136,23 @@ Araçlar sisteme kurulmaz; proje içindeki `.tools\` klasöründe taşınabilir 
 . .\env.ps1
 ```
 
+Başındaki nokta ve boşluk önemlidir; `.\env.ps1` olarak çalıştırılırsa ayarlar terminalde kalmaz.
+
+Windows betiği *"is not digitally signed"* / `PSSecurityException` hatasıyla engellerse
+(varsayılan çalıştırma politikası ya da zip'ten gelen "internetten indirildi" işareti),
+aynı terminalde önce şunları çalıştırın:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force   # yalnızca bu terminal için; yönetici gerekmez
+Get-ChildItem -Recurse -Filter *.ps1 | Unblock-File                 # zip'ten gelen engel işaretini kaldırır (bir kez yeterli)
+. .\env.ps1
+```
+
+İlk satır her yeni terminalde gerekir. Kalıcı olarak yalnızca kendi kullanıcınız için
+yerel betiklere izin vermek isterseniz bir kez `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+çalıştırabilirsiniz. Hata sürerse `Get-ExecutionPolicy -List` çıktısına bakın: `MachinePolicy` ya da
+`UserPolicy` doluysa politika Group Policy ile belirlenmiştir ve bu komutlarla değiştirilemez.
+
 Bu yalnızca o terminal oturumunun `PATH`'ini ayarlar. `.tools\` yoksa (ör. depoyu yeni
 klonladıysanız): Go ve Node.js'in resmi Windows **zip** sürümlerini `.tools\go` ve
 `.tools\node` klasörlerine, isterseniz Git for Windows **PortableGit**'i `.tools\git`

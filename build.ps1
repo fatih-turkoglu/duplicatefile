@@ -12,6 +12,16 @@ Set-Location $PSScriptRoot
 $version = (Get-Content wails.json -Raw | ConvertFrom-Json).info.productVersion
 if (-not $version) { throw 'wails.json içinde info.productVersion yok' }
 
+# Arayüz önce derlenir: main.go'daki //go:embed all:frontend/dist, go vet/test için
+# frontend\dist'in var olmasını gerektirir (temiz klonda yoktur).
+Push-Location frontend
+try {
+    npm install
+    if ($LASTEXITCODE) { throw 'npm install başarısız' }
+    npm run build
+    if ($LASTEXITCODE) { throw 'arayüz derlemesi başarısız' }
+} finally { Pop-Location }
+
 if (-not $SkipTests) {
     go vet ./...
     if ($LASTEXITCODE) { throw 'go vet başarısız' }
@@ -30,7 +40,8 @@ if ((Test-Path $ico) -and (Get-Item 'build\appicon.png').LastWriteTime -gt (Get-
     Remove-Item $ico
 }
 
-wails build -clean -trimpath -ldflags "-X main.version=$version"
+# -s: arayüz yukarıda derlendi, Wails yeniden derlemesin
+wails build -clean -s -trimpath -ldflags "-X main.version=$version"
 if ($LASTEXITCODE) { throw 'wails build başarısız' }
 
 # Dil dosyaları exe'nin yanındaki lang klasörüne (uygulama oradan okur).
