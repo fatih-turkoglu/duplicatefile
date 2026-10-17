@@ -6,7 +6,7 @@ import "DuplicateFile/internal/i18n"
 type LanguageSetup struct {
 	Dir       string      `json:"dir"`       // dil dosyalarının klasörü
 	Available []i18n.Info `json:"available"` // lang klasöründeki diller
-	System    []string    `json:"system"`    // Windows'un tercih ettiği diller, öncelik sırasıyla
+	System    []string    `json:"system"`    // sistemin tercih ettiği diller, öncelik sırasıyla
 }
 
 // LanguageSetup, mevcut dil dosyalarını ve sistemin dil tercihlerini döner.

@@ -131,7 +131,16 @@ func Dir() string {
 	if err != nil {
 		return "lang"
 	}
-	return filepath.Join(filepath.Dir(exe), "lang")
+	return languageDir(exe)
+}
+
+// macOS bundles keep writable/customisable translations in Contents/Resources.
+func languageDir(exe string) string {
+	dir := filepath.Dir(exe)
+	if filepath.Base(dir) == "MacOS" && filepath.Base(filepath.Dir(dir)) == "Contents" {
+		return filepath.Join(filepath.Dir(dir), "Resources", "lang")
+	}
+	return filepath.Join(dir, "lang")
 }
 
 // List, klasördeki geçerli dil dosyalarını ada göre sıralı döner. Klasör

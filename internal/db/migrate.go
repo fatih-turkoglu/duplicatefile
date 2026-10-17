@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	"runtime"
 )
 
 // migrations, şemanın sürüm sürüm değişiklikleridir. Veritabanının mevcut
@@ -40,6 +41,36 @@ var migrations = []string{
 	ALTER TABLE files ADD COLUMN width  INTEGER NOT NULL DEFAULT 0;
 	ALTER TABLE files ADD COLUMN height INTEGER NOT NULL DEFAULT 0;
 	`,
+
+	// v3: Unix disks can contain separate files differing only in case.
+	// Rebuild the table without losing IDs, cached hashes or scan history.
+	`
+	CREATE TABLE files_v3 (
+		id INTEGER PRIMARY KEY,
+		path TEXT NOT NULL UNIQUE COLLATE ` + pathCollation() + `,
+		size INTEGER NOT NULL,
+		mtime INTEGER NOT NULL,
+		partial_hash TEXT,
+		full_hash TEXT,
+		last_seen_scan INTEGER NOT NULL DEFAULT 0,
+		phash TEXT,
+		width INTEGER NOT NULL DEFAULT 0,
+		height INTEGER NOT NULL DEFAULT 0
+	);
+	INSERT INTO files_v3 SELECT id, path, size, mtime, partial_hash, full_hash,
+		last_seen_scan, phash, width, height FROM files;
+	DROP TABLE files;
+	ALTER TABLE files_v3 RENAME TO files;
+	CREATE INDEX idx_files_size ON files(size);
+	CREATE INDEX idx_files_full_hash ON files(full_hash) WHERE full_hash IS NOT NULL;
+	`,
+}
+
+func pathCollation() string {
+	if runtime.GOOS == "windows" {
+		return "NOCASE"
+	}
+	return "BINARY"
 }
 
 // SchemaVersion, bu sürümün beklediği şema sürümüdür.

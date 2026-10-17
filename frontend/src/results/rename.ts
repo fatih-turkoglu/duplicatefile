@@ -2,6 +2,7 @@
 // fileops.ValidateName ile aynıdır; son kontrolü yine de Go tarafı yapar.
 // Hatalar kod olarak döner (rename.error.<kod> anahtarıyla çevrilir).
 import { fileName, folderOf } from './selection.ts'
+import { isWindowsPath, pathKey } from '../paths.ts'
 
 // Yer tutucular dilden bağımsızdır; açıklamaları çevrilir.
 // Eski Türkçe yer tutucular ({ad}, {uzantı}) da kabul edilir.
@@ -41,8 +42,9 @@ const RESERVED = new Set([
 ])
 
 // Geçerliyse null, değilse hata kodu döner.
-export function validateName(name: string): RenameError | null {
+export function validateName(name: string, windows = true): RenameError | null {
   if (name === '' || name === '.' || name === '..') return { code: 'empty' }
+  if (!windows) return /[/:\x00]/.test(name) ? { code: 'chars' } : null
   if (/[ .]$/.test(name)) return { code: 'trailing' }
   // eslint-disable-next-line no-control-regex
   if (/[<>:"/\\|?*\x00-\x1f]/.test(name)) return { code: 'chars' }
@@ -62,12 +64,12 @@ export interface RenamePlanItem {
 export function planRenames(paths: string[], template: string): RenamePlanItem[] {
   const items: RenamePlanItem[] = paths.map((path, i) => {
     const newName = applyTemplate(template, path, i + 1)
-    let error = validateName(newName)
+    let error = validateName(newName, isWindowsPath(path))
     if (!error && newName === fileName(path)) error = { code: 'unchanged' }
     return { path, newName, error }
   })
 
-  const key = (it: RenamePlanItem) => `${folderOf(it.path)}\\${it.newName}`.toLowerCase()
+  const key = (it: RenamePlanItem) => pathKey(`${folderOf(it.path)}${isWindowsPath(it.path) ? '\\' : '/'}${it.newName}`)
   const seen = new Map<string, number>()
   for (const it of items) seen.set(key(it), (seen.get(key(it)) ?? 0) + 1)
   for (const it of items) {

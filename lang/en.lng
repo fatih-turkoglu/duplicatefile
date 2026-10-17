@@ -351,6 +351,7 @@ error.no_roots = No folder selected to scan.
 opError.exists = A file with the same name exists at the target.
 opError.invalid_name = Invalid file name.
 opError.no_recycle_bin = This drive has no Recycle Bin.
+opError.protected_path = System and application files are protected. Scan your personal folders instead.
 opError.cancelled = The operation was cancelled.
 opError.last_copy = Not deleted: no other copy of this file would remain.
 opError.unverified = Could not verify that this file has a copy; rescan the folder.
@@ -360,3 +361,20 @@ opError.dest_invalid = Invalid target folder.
 opError.path_not_absolute = The path must be absolute.
 opError.not_found = The file no longer exists.
 opError.access_denied = Access denied.
+
+results.explorerFailed.mac = Could not open Finder: {error}
+
+file.showInExplorer.mac = Show in Finder
+file.showInExplorerAria.mac = Show {path} in Finder
+
+delete.recycleText.mac = {bytes} will be moved to Trash; you can restore the files from there if needed.
+delete.permanentCheck.mac = Do not use Trash, delete permanently
+delete.confirmRecycle.mac = Move to Trash
+
+outcome.recycled.mac.one = {count} file moved to Trash
+outcome.recycled.mac.other = {count} files moved to Trash
+
+report.noRecycle.mac.one = {count} file could not be moved to Trash on this volume. You can choose to delete it permanently.
+report.noRecycle.mac.other = {count} files could not be moved to Trash on this volume. You can choose to delete them permanently.
+
+opError.no_recycle_bin.mac = This volume does not support Trash.

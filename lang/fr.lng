@@ -347,3 +347,18 @@ opError.dest_invalid = Dossier de destination invalide.
 opError.path_not_absolute = Le chemin doit être absolu.
 opError.not_found = Le fichier n’existe plus.
 opError.access_denied = Accès refusé.
+
+# macOS
+results.explorerFailed.mac = Impossible d’ouvrir le Finder : {error}
+file.showInExplorer.mac = Afficher dans le Finder
+file.showInExplorerAria.mac = Afficher {path} dans le Finder
+delete.recycleText.mac = {bytes} seront envoyés à la Corbeille ; vous pourrez les y restaurer si nécessaire.
+delete.permanentCheck.mac = Ne pas utiliser la Corbeille, supprimer définitivement
+delete.confirmRecycle.mac = Envoyer à la Corbeille
+outcome.recycled.mac.one = {count} fichier envoyé à la Corbeille
+outcome.recycled.mac.other = {count} fichiers envoyés à la Corbeille
+report.noRecycle.mac.one = {count} fichier se trouve sur un lecteur sans Corbeille (lecteur réseau, clé USB). Il ne peut être supprimé que définitivement.
+report.noRecycle.mac.other = {count} fichiers se trouvent sur un lecteur sans Corbeille (lecteur réseau, clé USB). Ils ne peuvent être supprimés que définitivement.
+opError.no_recycle_bin.mac = Ce lecteur n’a pas de Corbeille.
+
+opError.protected_path = Les fichiers système et d’application sont protégés. Analysez vos dossiers personnels.

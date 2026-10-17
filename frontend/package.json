@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": { "node": ">=22.13.0" },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "node --test \"src/**/*.test.ts\"",
-    "lang:en": "node scripts/gen-en-lng.mjs"
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\"",
+    "lang:en": "node --experimental-strip-types scripts/gen-en-lng.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

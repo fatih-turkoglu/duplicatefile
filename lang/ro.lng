@@ -377,3 +377,20 @@ opError.dest_invalid = Folder de destinație nevalid.
 opError.path_not_absolute = Calea trebuie să fie absolută.
 opError.not_found = Fișierul nu mai există.
 opError.access_denied = Acces refuzat.
+
+# macOS
+results.explorerFailed.mac = Finder nu a putut fi deschis: {error}
+file.showInExplorer.mac = Afișează în Finder
+file.showInExplorerAria.mac = Afișează {path} în Finder
+delete.recycleText.mac = {bytes} vor fi trimiși în Coșul de reciclare; la nevoie îi puteți restaura de acolo.
+delete.permanentCheck.mac = Nu folosi Coșul de reciclare, șterge definitiv
+delete.confirmRecycle.mac = Trimite în Coșul de reciclare
+outcome.recycled.mac.one = {count} fișier trimis în Coșul de reciclare
+outcome.recycled.mac.few = {count} fișiere trimise în Coșul de reciclare
+outcome.recycled.mac.other = {count} de fișiere trimise în Coșul de reciclare
+report.noRecycle.mac.one = {count} fișier se află pe o unitate fără Coș de reciclare (unitate de rețea, stick USB). Poate fi șters doar definitiv.
+report.noRecycle.mac.few = {count} fișiere se află pe o unitate fără Coș de reciclare (unitate de rețea, stick USB). Pot fi șterse doar definitiv.
+report.noRecycle.mac.other = {count} de fișiere se află pe o unitate fără Coș de reciclare (unitate de rețea, stick USB). Pot fi șterse doar definitiv.
+opError.no_recycle_bin.mac = Această unitate nu are Coș de reciclare.
+
+opError.protected_path = Fișierele de sistem și de aplicație sunt protejate. Scanați dosarele personale.

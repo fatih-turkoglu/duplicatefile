@@ -347,3 +347,18 @@ opError.dest_invalid = Ungültiger Zielordner.
 opError.path_not_absolute = Der Pfad muss absolut sein.
 opError.not_found = Die Datei existiert nicht mehr.
 opError.access_denied = Zugriff verweigert.
+
+# macOS
+results.explorerFailed.mac = Finder konnte nicht geöffnet werden: {error}
+file.showInExplorer.mac = Im Finder anzeigen
+file.showInExplorerAria.mac = {path} im Finder anzeigen
+delete.recycleText.mac = {bytes} werden in den Papierkorb verschoben; bei Bedarf können Sie sie dort wiederherstellen.
+delete.permanentCheck.mac = Papierkorb nicht verwenden, endgültig löschen
+delete.confirmRecycle.mac = In den Papierkorb verschieben
+outcome.recycled.mac.one = {count} Datei in den Papierkorb verschoben
+outcome.recycled.mac.other = {count} Dateien in den Papierkorb verschoben
+report.noRecycle.mac.one = {count} Datei liegt auf einem Laufwerk ohne Papierkorb (Netzlaufwerk, USB-Stick). Sie kann nur endgültig gelöscht werden.
+report.noRecycle.mac.other = {count} Dateien liegen auf einem Laufwerk ohne Papierkorb (Netzlaufwerk, USB-Stick). Sie können nur endgültig gelöscht werden.
+opError.no_recycle_bin.mac = Dieses Laufwerk hat keinen Papierkorb.
+
+opError.protected_path = System- und Anwendungsdateien sind geschützt. Scannen Sie Ihre persönlichen Ordner.

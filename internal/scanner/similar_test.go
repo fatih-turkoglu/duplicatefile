@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"golang.org/x/image/draw"
@@ -30,7 +31,7 @@ func pattern(seed int64, w, h int) *image.RGBA {
 
 func saveImage(t *testing.T, root, rel string, img image.Image) string {
 	t.Helper()
-	p := filepath.Join(root, rel)
+	p := filepath.Join(root, filepath.FromSlash(strings.ReplaceAll(rel, `\`, "/")))
 	os.MkdirAll(filepath.Dir(p), 0o755)
 	f, err := os.Create(p)
 	if err != nil {

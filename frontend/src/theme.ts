@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 import { bgBG, deDE, enUS, frFR, ptBR, ptPT, roRO, trTR } from '@mui/material/locale'
+import { isMac } from './platform'
 
 // MUI'nin kendi bileşen metinleri (ör. "Seçenek yok") için dil paketleri.
 // Dil dosyasının @locale değerine göre seçilir; bilinmeyen dilde İngilizce.
@@ -44,7 +45,7 @@ export function createAppTheme(locale: string) {
       },
       shape: { borderRadius: 12 },
       typography: {
-        fontFamily: 'Roboto, "Segoe UI", system-ui, sans-serif',
+        fontFamily: isMac ? '-apple-system, BlinkMacSystemFont, system-ui, sans-serif' : 'Roboto, "Segoe UI", system-ui, sans-serif',
         button: { textTransform: 'none', fontWeight: 500 },
       },
       components: {
