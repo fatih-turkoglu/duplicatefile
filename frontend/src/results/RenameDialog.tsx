@@ -18,6 +18,7 @@ import type { RenameItem } from '../api'
 import { t } from '../i18n/core'
 import { planRenames, splitName, TEMPLATE_TOKENS, validateName, type RenameError } from './rename'
 import { fileName } from './selection'
+import { isWindowsPath } from '../paths'
 
 interface Props {
   open: boolean
@@ -42,7 +43,7 @@ export default function RenameDialog({ open, paths, onClose, onConfirm }: Props)
   const planErrors = plan.filter((p) => p.error).length
 
   const singleError = single
-    ? (validateName(name) ?? (name === fileName(paths[0]) ? ({ code: 'unchanged' } as RenameError) : null))
+    ? (validateName(name, isWindowsPath(paths[0])) ?? (name === fileName(paths[0]) ? ({ code: 'unchanged' } as RenameError) : null))
     : null
   const canConfirm = single ? !singleError : planErrors === 0 && plan.length > 0
 

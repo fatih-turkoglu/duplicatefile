@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"DuplicateFile/internal/appdirs"
+
 	_ "modernc.org/sqlite" // saf Go SQLite sürücüsü, CGO gerektirmez
 )
 
@@ -25,13 +27,14 @@ type DB struct {
 }
 
 // DefaultPath, veritabanının varsayılan konumunu döner:
-// %LOCALAPPDATA%\DuplicateFile\index.db
+// Windows: %LOCALAPPDATA%\DuplicateFile\index.db
+// macOS: ~/Library/Application Support/DuplicateFile/index.db
 func DefaultPath() (string, error) {
-	dir, err := os.UserCacheDir()
+	dir, err := appdirs.Data()
 	if err != nil {
 		return "", fmt.Errorf("db: user data folder not found: %w", err)
 	}
-	return filepath.Join(dir, "DuplicateFile", "index.db"), nil
+	return filepath.Join(dir, "index.db"), nil
 }
 
 // Open, verilen yoldaki veritabanını açar (yoksa oluşturur) ve şemayı

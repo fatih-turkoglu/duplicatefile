@@ -347,3 +347,18 @@ opError.dest_invalid = Pasta de destino inválida.
 opError.path_not_absolute = O caminho deve ser absoluto.
 opError.not_found = O arquivo não existe mais.
 opError.access_denied = Acesso negado.
+
+# macOS
+results.explorerFailed.mac = Não foi possível abrir o Finder: {error}
+file.showInExplorer.mac = Mostrar no Finder
+file.showInExplorerAria.mac = Mostrar {path} no Finder
+delete.recycleText.mac = {bytes} serão enviados para a Lixeira; se necessário, você pode restaurá-los de lá.
+delete.permanentCheck.mac = Não usar a Lixeira, excluir permanentemente
+delete.confirmRecycle.mac = Enviar para a Lixeira
+outcome.recycled.mac.one = {count} arquivo enviado para a Lixeira
+outcome.recycled.mac.other = {count} arquivos enviados para a Lixeira
+report.noRecycle.mac.one = {count} arquivo está em uma unidade sem Lixeira (unidade de rede, pen drive). Ele só pode ser excluído permanentemente.
+report.noRecycle.mac.other = {count} arquivos estão em uma unidade sem Lixeira (unidade de rede, pen drive). Eles só podem ser excluídos permanentemente.
+opError.no_recycle_bin.mac = Esta unidade não tem Lixeira.
+
+opError.protected_path = Os arquivos do sistema e dos aplicativos estão protegidos. Verifique suas pastas pessoais.

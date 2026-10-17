@@ -96,13 +96,13 @@ func (a *App) acquire() (release func(), err error) {
 	}, nil
 }
 
-// SelectFolder Windows klasör seçme diyaloğunu açar. Kullanıcı vazgeçerse
+// SelectFolder sistemin klasör seçme diyaloğunu açar. Kullanıcı vazgeçerse
 // boş metin döner.
 func (a *App) SelectFolder(title string) (string, error) {
 	return runtime.OpenDirectoryDialog(a.ctx, runtime.OpenDialogOptions{Title: title})
 }
 
-// ShowInExplorer Gezgin'i açıp dosyayı seçili gösterir.
+// ShowInExplorer Finder ya da Gezgin'i açıp dosyayı seçili gösterir.
 func (a *App) ShowInExplorer(path string) error {
 	return showInExplorer(path)
 }

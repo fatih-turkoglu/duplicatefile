@@ -6,7 +6,7 @@
 // Kullanım (proje kökünde, iki ayrı terminalde):
 //   . .\env.ps1; wails dev
 //   . .\env.ps1; node frontend\e2e\fileops.mjs [çıktı-klasörü]
-import { chromium } from 'playwright-core'
+import { launchBrowser } from './browser.mjs'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -21,7 +21,7 @@ const src = path.join(base, 'kaynak')
 const dest = path.join(base, 'hedef')
 fs.mkdirSync(dest)
 const write = (rel, content, ageDays) => {
-  const p = path.join(src, rel)
+  const p = path.join(src, ...rel.split(/[\\/]/))
   fs.mkdirSync(path.dirname(p), { recursive: true })
   fs.writeFileSync(p, content)
   const t = new Date(Date.now() - ageDays * 86400000)
@@ -37,11 +37,7 @@ const files = {
 const exists = (p) => fs.existsSync(p)
 
 // ---- Tarayıcı
-const edge = [
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-].find((p) => fs.existsSync(p))
-const browser = await chromium.launch({ executablePath: edge, headless: true })
+const browser = await launchBrowser()
 const page = await browser.newPage({ viewport: { width: 1100, height: 800 } })
 const errors = []
 // Test dosyalarının içeriği gerçek görsel değil ("foto.jpg" yalnızca 'x' bayt):
@@ -126,7 +122,7 @@ try {
   await check(files.belge[1])
   await page.click('button:has-text("Taşı")')
   await page.click('[role="dialog"] button:has-text("Klasör seç")')
-  await page.waitForSelector(`[role="dialog"] >> text=${dest}`)
+  await page.getByRole('dialog').getByText(dest, { exact: true }).waitFor()
   await shot('3-move-dialog')
   await page.click('[role="dialog"] button:has-text("Taşı")')
   await snackbar('1 dosya taşındı')
@@ -168,6 +164,10 @@ try {
   await page.setViewportSize({ width: 400, height: 800 })
   await sleep(300)
   await shot('6-narrow')
+} catch (error) {
+  await shot('failure').catch(() => {})
+  console.error((await page.locator('body').innerText()).slice(0, 3000))
+  throw error
 } finally {
   await page.evaluate(() => localStorage.removeItem('scanOptions')).catch(() => {})
   await browser.close()

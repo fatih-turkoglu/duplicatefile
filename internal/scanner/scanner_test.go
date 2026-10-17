@@ -26,7 +26,7 @@ func openDB(t *testing.T) *db.DB {
 
 func write(t *testing.T, root, rel string, data []byte) string {
 	t.Helper()
-	p := filepath.Join(root, rel)
+	p := filepath.Join(root, filepath.FromSlash(strings.ReplaceAll(rel, `\`, "/")))
 	if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -203,7 +203,7 @@ func TestScanMinSize(t *testing.T) {
 func TestScanNestedRoots(t *testing.T) {
 	root, _ := fixture(t)
 	s := New(openDB(t))
-	res := scan(t, s, Options{Roots: []string{filepath.Join(root, "b"), root, root + `\`}})
+	res := scan(t, s, Options{Roots: []string{filepath.Join(root, "b"), root, root + string(filepath.Separator)}})
 	if len(res.Roots) != 1 {
 		t.Errorf("Roots = %v, iç içe kökler elenmeliydi", res.Roots)
 	}

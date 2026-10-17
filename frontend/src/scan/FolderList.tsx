@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import { api } from '../api'
 import { t } from '../i18n/core'
+import { pathKey } from '../paths'
 
 interface Props {
   folders: string[]
@@ -20,7 +21,7 @@ export default function FolderList({ folders, onChange, addLabel, dialogTitle, e
     const path = await api.selectFolder(dialogTitle)
     if (!path) return
     // Windows yolları büyük/küçük harf duyarsız
-    if (folders.some((f) => f.toLowerCase() === path.toLowerCase())) return
+    if (folders.some((f) => pathKey(f) === pathKey(path))) return
     onChange([...folders, path])
   }
 

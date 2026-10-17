@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -36,7 +37,7 @@ func setup(t *testing.T) *env {
 // file, içerikli bir dosya oluşturup DB'ye hash'iyle kaydeder.
 func (e *env) file(rel, content string) string {
 	e.t.Helper()
-	p := filepath.Join(e.dir, rel)
+	p := filepath.Join(e.dir, filepath.FromSlash(strings.ReplaceAll(rel, `\`, "/")))
 	os.MkdirAll(filepath.Dir(p), 0o755)
 	if err := os.WriteFile(p, []byte(content), 0o644); err != nil {
 		e.t.Fatal(err)
@@ -252,7 +253,7 @@ func TestRename(t *testing.T) {
 	rep := e.svc.Rename(e.ctx, []RenameItem{
 		{Path: a, NewName: "yeni ad.txt"},
 		{Path: b, NewName: "yeni ad.txt"}, // az önce alınan ad: çakışma
-		{Path: b, NewName: `alt\c.txt`},   // klasör ayracı yasak
+		{Path: b, NewName: "alt/c.txt"},   // klasör ayracı yasak
 	}, nil)
 	if rep.Succeeded != 1 || rep.Failed != 2 {
 		t.Fatalf("rapor: %+v", rep)
@@ -276,7 +277,7 @@ func TestRename(t *testing.T) {
 	if !strings.Contains(strings.Join(names, "|"), "B.txt") {
 		t.Errorf("diskteki adlar: %v", names)
 	}
-	if f, err := e.db.FileByPath(e.ctx, b); err != nil || f.Path != filepath.Join(e.dir, "B.txt") {
+	if f, err := e.db.FileByPath(e.ctx, filepath.Join(e.dir, "B.txt")); err != nil || f.Path != filepath.Join(e.dir, "B.txt") {
 		t.Errorf("DB kaydı: %+v %v", f, err)
 	}
 }
@@ -287,8 +288,18 @@ func TestValidateName(t *testing.T) {
 			t.Errorf("%q geçerli olmalı: %v", name, err)
 		}
 	}
-	for _, name := range []string{"", ".", "..", "a/b", `a\b`, "a:b", "a?", "a*", `a"`, "a<", "a>", "a|",
-		"son nokta.", "son boşluk ", "CON", "con.txt", "Lpt1.log", "nul", "a\tb"} {
+	invalid := []string{"", ".", "..", "a/b", "a:b", "a\x00b"}
+	windowsOnly := []string{`a\b`, "a?", "a*", `a"`, "a<", "a>", "a|", "son nokta.", "son boşluk ", "CON", "con.txt", "Lpt1.log", "nul", "a\tb"}
+	if runtime.GOOS == "windows" {
+		invalid = append(invalid, windowsOnly...)
+	} else {
+		for _, name := range windowsOnly {
+			if err := ValidateName(name); err != nil {
+				t.Errorf("%q is valid on Unix: %v", name, err)
+			}
+		}
+	}
+	for _, name := range invalid {
 		if err := ValidateName(name); !errors.Is(err, ErrInvalidName) {
 			t.Errorf("%q geçersiz olmalı: %v", name, err)
 		}

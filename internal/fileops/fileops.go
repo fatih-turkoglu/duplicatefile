@@ -11,11 +11,13 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
 	"DuplicateFile/internal/db"
 	"DuplicateFile/internal/imaging"
+	"DuplicateFile/internal/pathutil"
 )
 
 var (
@@ -29,6 +31,7 @@ var (
 	ErrNotRegular   = errors.New("only regular files can be processed")
 	ErrDestInvalid  = errors.New("invalid target folder")
 	ErrNotAbsolute  = errors.New("path must be absolute")
+	ErrProtected    = errors.New("system and application files cannot be changed; scan personal folders")
 )
 
 // Arayüzün hataları metinden değil koddan tanıması için.
@@ -46,6 +49,7 @@ var errorCodes = []struct {
 	{ErrNotRegular, "not_regular"},
 	{ErrDestInvalid, "dest_invalid"},
 	{ErrNotAbsolute, "path_not_absolute"},
+	{ErrProtected, "protected_path"},
 	{fs.ErrNotExist, "not_found"},
 	{fs.ErrPermission, "access_denied"},
 }
@@ -163,6 +167,10 @@ func (s *Service) Delete(ctx context.Context, paths []string, opts DeleteOptions
 	}
 	return each(ctx, paths, progress, func(p string) Result {
 		res := Result{Path: p}
+		if pathutil.IsProtected(p) {
+			res.fail(ErrProtected)
+			return res
+		}
 		if err := refused[p]; err != nil {
 			res.fail(err)
 			return res
@@ -203,7 +211,7 @@ func (s *Service) lastCopyCheck(ctx context.Context, paths []string) map[string]
 	refused := make(map[string]error)
 	deleting := make(map[string]bool, len(paths))
 	for _, p := range paths {
-		deleting[strings.ToLower(p)] = true
+		deleting[pathutil.Key(p)] = true
 	}
 
 	groups := make(map[content][]string)
@@ -218,14 +226,15 @@ func (s *Service) lastCopyCheck(ctx context.Context, paths []string) map[string]
 	}
 
 	for k, members := range groups {
+		selected := fileInfos(members)
 		copies, err := s.db.FilesByContent(ctx, k.size, k.hash)
 		survivor := false
 		for _, c := range copies {
-			if err != nil || deleting[strings.ToLower(c.Path)] {
+			if err != nil || deleting[pathutil.Key(c.Path)] || pathutil.IsProtected(c.Path) {
 				continue
 			}
 			info, statErr := os.Stat(c.Path)
-			if statErr == nil && info.Mode().IsRegular() && info.Size() == k.size && info.ModTime().UnixNano() == c.ModTime {
+			if statErr == nil && info.Mode().IsRegular() && info.Size() == k.size && info.ModTime().UnixNano() == c.ModTime && independentFile(info, selected) {
 				survivor = true
 				break
 			}
@@ -265,7 +274,7 @@ func (s *Service) lastSimilarCheck(ctx context.Context, paths []string, refused 
 	}
 	deleting := make(map[string]bool, len(paths))
 	for _, p := range paths {
-		deleting[strings.ToLower(p)] = true
+		deleting[pathutil.Key(p)] = true
 	}
 	type candidate struct {
 		f    db.File
@@ -273,7 +282,7 @@ func (s *Service) lastSimilarCheck(ctx context.Context, paths []string, refused 
 	}
 	var cands []candidate
 	for _, f := range all {
-		if deleting[strings.ToLower(f.Path)] {
+		if deleting[pathutil.Key(f.Path)] || pathutil.IsProtected(f.Path) {
 			continue
 		}
 		if h, ok := imaging.ParseHash(f.PHash); ok {
@@ -282,11 +291,12 @@ func (s *Service) lastSimilarCheck(ctx context.Context, paths []string, refused 
 	}
 
 	alive := make(map[string]bool) // diskte değişmeden duruyor mu (önbellekli)
+	selected := fileInfos(paths)
 	isAlive := func(f db.File) bool {
 		v, ok := alive[f.Path]
 		if !ok {
 			info, err := os.Stat(f.Path)
-			v = err == nil && info.Mode().IsRegular() && info.Size() == f.Size && info.ModTime().UnixNano() == f.ModTime
+			v = err == nil && info.Mode().IsRegular() && info.Size() == f.Size && info.ModTime().UnixNano() == f.ModTime && independentFile(info, selected)
 			alive[f.Path] = v
 		}
 		return v
@@ -310,6 +320,26 @@ func (s *Service) lastSimilarCheck(ctx context.Context, paths []string, refused 
 	return out
 }
 
+func fileInfos(paths []string) []fs.FileInfo {
+	infos := make([]fs.FileInfo, 0, len(paths))
+	for _, path := range paths {
+		if info, err := os.Lstat(path); err == nil {
+			infos = append(infos, info)
+		}
+	}
+	return infos
+}
+
+// A second mount path, symlink alias or hard link is not an independent backup.
+func independentFile(info fs.FileInfo, selected []fs.FileInfo) bool {
+	for _, source := range selected {
+		if os.SameFile(info, source) {
+			return false
+		}
+	}
+	return true
+}
+
 // Move dosyaları destDir klasörüne taşır.
 func (s *Service) Move(ctx context.Context, paths []string, destDir string, conflict Conflict, progress Progress) Report {
 	dbCtx := context.WithoutCancel(ctx)
@@ -325,7 +355,7 @@ func (s *Service) Move(ctx context.Context, paths []string, destDir string, conf
 			return res
 		}
 		dest := filepath.Join(destDir, filepath.Base(p))
-		if strings.EqualFold(filepath.Clean(dest), filepath.Clean(p)) {
+		if pathutil.Same(dest, p) {
 			res.fail(ErrSameFolder)
 			return res
 		}
@@ -369,7 +399,7 @@ func (s *Service) Rename(ctx context.Context, items []RenameItem, progress Progr
 			return res
 		}
 		// Yalnızca harf büyüklüğü değişiyorsa hedef dosya kaynağın kendisidir.
-		if exists(dest) && !strings.EqualFold(dest, it.Path) {
+		if exists(dest) && !pathutil.Same(dest, it.Path) {
 			res.fail(ErrExists)
 			return res
 		}
@@ -455,11 +485,17 @@ func copyThenRemove(src, dest string) (err error) {
 	return nil
 }
 
-// ValidateName, Windows dosya adı kurallarını denetler.
+// ValidateName, kullanılan platformun dosya adı kurallarını denetler.
 func ValidateName(name string) error {
 	invalid := func(why string) error { return fmt.Errorf("%w: %s", ErrInvalidName, why) }
 	if name == "" || name == "." || name == ".." {
 		return invalid("name cannot be empty")
+	}
+	if runtime.GOOS != "windows" {
+		if strings.ContainsAny(name, "/:\x00") {
+			return invalid("name cannot contain a slash, colon or NUL")
+		}
+		return nil
 	}
 	if strings.TrimRight(name, " .") != name {
 		return invalid("name cannot end with a space or a dot")
@@ -512,6 +548,9 @@ func checkFile(p string) error {
 	if !info.Mode().IsRegular() {
 		return ErrNotRegular
 	}
+	if pathutil.IsProtected(p) {
+		return ErrProtected
+	}
 	return nil
 }
 
@@ -527,6 +566,9 @@ func checkDir(p string) error {
 	}
 	if !info.IsDir() {
 		return fmt.Errorf("%w: not a folder", ErrDestInvalid)
+	}
+	if pathutil.IsProtected(p) {
+		return ErrProtected
 	}
 	return nil
 }

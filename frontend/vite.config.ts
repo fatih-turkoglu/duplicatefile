@@ -13,6 +13,9 @@ const vendorChunks: Record<string, string[]> = {
 export default defineConfig({
   plugins: [react()],
   build: {
+    // macOS 12 ships with Safari 15's WKWebView. Vite's default targets 16.4+.
+    target: 'safari15',
+    cssTarget: 'safari15',
     rollupOptions: {
       output: {
         manualChunks(id) {

@@ -7,14 +7,15 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"strings"
 
+	"DuplicateFile/internal/appdirs"
 	"DuplicateFile/internal/apperr"
 	"DuplicateFile/internal/db"
+	"DuplicateFile/internal/pathutil"
 )
 
 // config, uygulama ayarlarının veritabanı dışında tutulması gerekenleridir
-// (veritabanının kendi konumu gibi). %LOCALAPPDATA%\DuplicateFile\config.json
+// (veritabanının kendi konumu gibi). Platformun kalıcı uygulama veri klasöründedir.
 type config struct {
 	DBPath string `json:"dbPath,omitempty"` // boşsa varsayılan konum
 }
@@ -32,11 +33,11 @@ var configFile = func() (string, error) {
 	if dir := os.Getenv(dataDirEnv); dir != "" {
 		return filepath.Join(dir, "config.json"), nil
 	}
-	dir, err := os.UserCacheDir()
+	dir, err := appdirs.Data()
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(dir, "DuplicateFile", "config.json"), nil
+	return filepath.Join(dir, "config.json"), nil
 }
 
 // dataDirEnv tanımlıysa varsayılan veritabanı ve ayar dosyası bu klasörde
@@ -92,7 +93,7 @@ func openConfiguredDB(ctx context.Context) (d *db.DB, warning string, err error)
 }
 
 func samePath(a, b string) bool {
-	return strings.EqualFold(filepath.Clean(a), filepath.Clean(b))
+	return pathutil.Same(a, b)
 }
 
 // moveDatabase, açık veritabanını newPath'e taşır ve orada açılmış hâlini

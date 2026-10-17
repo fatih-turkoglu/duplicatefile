@@ -319,3 +319,16 @@ opError.dest_invalid = Geçersiz hedef klasör.
 opError.path_not_absolute = Yol tam olmalı.
 opError.not_found = Dosya artık yok.
 opError.access_denied = Erişim engellendi.
+
+# macOS
+results.explorerFailed.mac = Finder açılamadı: {error}
+file.showInExplorer.mac = Finder’da göster
+file.showInExplorerAria.mac = {path} dosyasını Finder’da göster
+delete.recycleText.mac = {bytes} Çöp Sepeti’ne taşınacak; gerekirse dosyaları oradan geri alabilirsiniz.
+delete.permanentCheck.mac = Çöp Sepeti’ni kullanma, kalıcı olarak sil
+delete.confirmRecycle.mac = Çöp Sepeti’ne taşı
+outcome.recycled.mac.other = {count} dosya Çöp Sepeti’ne taşındı
+report.noRecycle.mac.other = {count} dosya bu birimde Çöp Sepeti’ne taşınamadı. İsterseniz bunları kalıcı olarak silebilirsiniz.
+opError.no_recycle_bin.mac = Bu birimde Çöp Sepeti desteklenmiyor.
+
+opError.protected_path = Sistem ve uygulama dosyaları korunuyor. Kişisel klasörlerinizi tarayın.

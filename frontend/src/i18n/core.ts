@@ -2,6 +2,7 @@
 // Seçili dil modül düzeyinde tutulur; dil değişince I18nProvider uygulamayı
 // yeniden çizer, böylece her bileşen t()'yi doğrudan çağırabilir.
 import { en } from './en.ts'
+import { isMac } from '../platform.ts'
 
 export type Params = Record<string, string | number>
 
@@ -45,6 +46,8 @@ export function has(key: string): boolean {
 // .one/.few/.other … eki seçilir. {ad} yer tutucuları params'tan doldurulur;
 // sayılar dile göre biçimlenir; params'ta olmayan yer tutucu olduğu gibi kalır.
 export function t(key: string, params?: Params): string {
+  // Platform variants are optional for custom language files; English remains the fallback.
+  if (isMac && (`${key}.mac` in en || `${key}.mac.other` in en)) key += '.mac'
   let text: string | undefined
   if (params && typeof params.count === 'number') {
     const rule = plural.select(params.count)

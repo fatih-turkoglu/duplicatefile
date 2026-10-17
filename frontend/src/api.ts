@@ -12,7 +12,7 @@ export type OpsReport = fileops.Report
 export type OpResult = fileops.Result
 export type RenameItem = { path: string; newName: string }
 // fileops.Result.Code ile aynı tutulmalı.
-export type OpErrorCode = 'exists' | 'invalid_name' | 'no_recycle_bin' | 'cancelled' | 'last_copy' | 'unverified' | 'error'
+export type OpErrorCode = 'exists' | 'invalid_name' | 'no_recycle_bin' | 'cancelled' | 'last_copy' | 'unverified' | 'protected_path' | 'error'
 export type Conflict = 'skip' | 'rename'
 
 export type ScanMode = 'exact' | 'similar'

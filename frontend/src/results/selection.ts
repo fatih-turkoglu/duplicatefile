@@ -1,6 +1,7 @@
 // Sonuç ekranının saf mantığı: sıralama, filtreleme ve seçim yardımcıları.
 // React'e ve Wails'e bağımlı değildir; node --test ile sınanır.
 import type { DuplicateGroup, FileEntry } from '../api'
+import { isWindowsPath, lastSeparator, pathKey } from '../paths.ts'
 
 export type Selection = ReadonlySet<string> // seçili dosya yolları
 export type SortKey = 'wasted' | 'size' | 'count'
@@ -18,21 +19,23 @@ export function wasted(g: DuplicateGroup): number {
 }
 
 export function fileName(path: string): string {
-  return path.slice(path.lastIndexOf('\\') + 1)
+  return path.slice(lastSeparator(path) + 1)
 }
 
 export function folderOf(path: string): string {
-  const i = path.lastIndexOf('\\')
+  const i = lastSeparator(path)
   if (i < 0) return ''
   // "D:\a.txt" → "D:\" (kök klasör ayraçla biter)
+  if (i === 0) return path.slice(0, 1)
   return i === 2 && path[1] === ':' ? path.slice(0, 3) : path.slice(0, i)
 }
 
 // path, folder'ın kendisinde ya da altında mı (büyük/küçük harf duyarsız)?
 export function isUnder(path: string, folder: string): boolean {
-  const p = path.toLowerCase()
-  let f = folder.toLowerCase()
-  if (!f.endsWith('\\')) f += '\\'
+  const p = pathKey(path)
+  let f = pathKey(folder)
+  const sep = isWindowsPath(folder) ? '\\' : '/'
+  if (!f.endsWith(sep)) f += sep
   return p.startsWith(f)
 }
 
@@ -149,7 +152,7 @@ export function folderCounts(groups: DuplicateGroup[]): { folder: string; count:
   for (const g of groups) {
     for (const f of g.files) {
       for (let dir = folderOf(f.path); dir; ) {
-        const key = dir.toLowerCase()
+        const key = pathKey(dir)
         const c = counts.get(key)
         if (c) c.count++
         else counts.set(key, { folder: dir, count: 1 })
