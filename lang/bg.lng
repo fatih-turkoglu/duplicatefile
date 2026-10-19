@@ -347,3 +347,18 @@ opError.dest_invalid = Невалидна целева папка.
 opError.path_not_absolute = Пътят трябва да е абсолютен.
 opError.not_found = Файлът вече не съществува.
 opError.access_denied = Достъпът е отказан.
+
+# macOS
+results.explorerFailed.mac = Finder не можа да бъде отворен: {error}
+file.showInExplorer.mac = Показване във Finder
+file.showInExplorerAria.mac = Показване на {path} във Finder
+delete.recycleText.mac = {bytes} ще бъдат преместени в кошчето; при нужда можете да ги възстановите оттам.
+delete.permanentCheck.mac = Без кошчето, окончателно изтриване
+delete.confirmRecycle.mac = Преместване в кошчето
+outcome.recycled.mac.one = {count} файл е преместен в кошчето
+outcome.recycled.mac.other = {count} файла са преместени в кошчето
+report.noRecycle.mac.one = {count} файл е на устройство без кошче (мрежово устройство, USB памет). Той може да бъде изтрит само окончателно.
+report.noRecycle.mac.other = {count} файла са на устройство без кошче (мрежово устройство, USB памет). Те могат да бъдат изтрити само окончателно.
+opError.no_recycle_bin.mac = Това устройство няма кошче.
+
+opError.protected_path = Системните файлове и файловете на приложенията са защитени. Сканирайте личните си папки.

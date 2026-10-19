@@ -23,6 +23,7 @@ import ThemeModeButton from '../components/ThemeModeButton'
 import { ScrollContainerContext } from './scrollContainer'
 import { t } from '../i18n/core'
 import { useScan } from '../scan/ScanContext'
+import { isMac } from '../platform'
 
 export type Page = 'scan' | 'results' | 'settings'
 
@@ -67,7 +68,16 @@ export default function AppLayout({ page, onNavigate, children }: Props) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <AppBar position="static" sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Toolbar sx={{ gap: 1.5 }}>
+        <Toolbar sx={{
+          gap: 1.5,
+          ...(isMac && {
+            pl: '100px !important',
+            minHeight: '64px !important',
+            '--wails-draggable': 'drag',
+            userSelect: 'none',
+            '& button': { '--wails-draggable': 'no-drag' },
+          }),
+        }}>
           <FileCopyIcon color="primary" />
           <Typography variant="h6" component="h1" noWrap sx={{ flexGrow: 1 }}>
             DuplicateFile

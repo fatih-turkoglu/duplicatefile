@@ -26,6 +26,7 @@ import (
 	"DuplicateFile/internal/apperr"
 	"DuplicateFile/internal/db"
 	"DuplicateFile/internal/imaging"
+	"DuplicateFile/internal/pathutil"
 )
 
 // Aşama adları; ilerleme olaylarında kullanılır.
@@ -48,10 +49,14 @@ const (
 // fazla farklı bit sayısıdır (64 üzerinden).
 const DefaultThreshold = 8
 
-// Her zaman atlanan Windows sistem klasörleri (küçük harfle).
+// Her zaman atlanan sistem ve Çöp Sepeti klasörleri (küçük harfle).
 var skipDirNames = map[string]bool{
 	"$recycle.bin":              true,
 	"system volume information": true,
+	".trashes":                  true,
+	".trash":                    true,
+	".spotlight-v100":           true,
+	".fseventsd":                true,
 }
 
 const (
@@ -258,7 +263,7 @@ func (s *Scanner) Scan(ctx context.Context, opts Options, onProgress func(Progre
 	return res, nil
 }
 
-// loadCache, köklerin altındaki tüm kayıtları küçük harfli yol anahtarıyla
+// loadCache, köklerin altındaki tüm kayıtları platforma uygun yol anahtarıyla
 // yükler. Kökler iç içe olmadığından kayıtlar çakışmaz.
 func (s *Scanner) loadCache(ctx context.Context, roots []string) (map[string]db.File, error) {
 	cache := make(map[string]db.File)
@@ -268,7 +273,7 @@ func (s *Scanner) loadCache(ctx context.Context, roots []string) (map[string]db.
 			return nil, err
 		}
 		for _, f := range files {
-			cache[strings.ToLower(f.Path)] = f
+			cache[pathutil.Key(f.Path)] = f
 		}
 	}
 	return cache, nil
@@ -280,6 +285,9 @@ func (s *Scanner) loadCache(ctx context.Context, roots []string) (map[string]db.
 func (r *run) walk(roots []string, cache map[string]db.File) ([]*entry, error) {
 	var entries []*entry
 	for _, root := range roots {
+		if r.opts.SkipHidden && pathutil.IsProtected(root) {
+			continue
+		}
 		err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 			if ctxErr := r.ctx.Err(); ctxErr != nil {
 				return ctxErr
@@ -302,7 +310,7 @@ func (r *run) walk(roots []string, cache map[string]db.File) ([]*entry, error) {
 				return nil // kısayol bağlantıları, aygıtlar vb.
 			}
 
-			key := strings.ToLower(path)
+			key := pathutil.Key(path)
 			cached, hasCached := cache[key]
 			delete(cache, key)
 
@@ -348,10 +356,13 @@ func (r *run) walk(roots []string, cache map[string]db.File) ([]*entry, error) {
 }
 
 func (r *run) skipDir(path string, d fs.DirEntry) bool {
-	if skipDirNames[strings.ToLower(d.Name())] || r.excludes[strings.ToLower(path)] {
+	if skipDirNames[strings.ToLower(d.Name())] || r.excludes[pathutil.Key(path)] {
 		return true
 	}
 	if r.opts.SkipHidden {
+		if pathutil.IsProtected(path) {
+			return true
+		}
 		if info, err := d.Info(); err == nil && isHiddenOrSystem(info) {
 			return true
 		}
@@ -609,18 +620,10 @@ func normalizeRoots(roots []string) ([]string, error) {
 	return out, nil
 }
 
-// within, path'in root'un kendisi ya da altında olup olmadığını büyük/küçük
-// harf duyarsız olarak söyler.
+// within, path'in root'un kendisi ya da altında olup olmadığını platformun
+// dosya yolu kurallarıyla söyler.
 func within(path, root string) bool {
-	path, root = strings.ToLower(path), strings.ToLower(root)
-	if path == root {
-		return true
-	}
-	sep := string(filepath.Separator)
-	if !strings.HasSuffix(root, sep) {
-		root += sep
-	}
-	return strings.HasPrefix(path, root)
+	return pathutil.Within(path, root)
 }
 
 func extSet(exts []string) map[string]bool {
@@ -642,7 +645,7 @@ func lowerSet(paths []string) map[string]bool {
 	m := make(map[string]bool)
 	for _, p := range paths {
 		if abs, err := filepath.Abs(p); err == nil {
-			m[strings.ToLower(abs)] = true
+			m[pathutil.Key(abs)] = true
 		}
 	}
 	return m

@@ -6,7 +6,7 @@
 //
 // Uygulamanın gösterdiği veritabanı yolu verilen klasörde değilse test
 // hiçbir şey yapmadan durur (gerçek kullanıcı verisini korumak için).
-import { chromium } from 'playwright-core'
+import { launchBrowser } from './browser.mjs'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -21,11 +21,7 @@ fs.mkdirSync(outDir, { recursive: true })
 const base = fs.mkdtempSync(path.join(os.tmpdir(), 'duplicatefile-settings-'))
 const moved = path.join(base, 'tasinan-db')
 
-const edge = [
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-].find((p) => fs.existsSync(p))
-const browser = await chromium.launch({ executablePath: edge, headless: true })
+const browser = await launchBrowser()
 const page = await browser.newPage({ viewport: { width: 1100, height: 900 } })
 const errors = []
 const ignored = [/favicon\.ico/, /wails\/ipc\.js/]

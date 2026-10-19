@@ -6,7 +6,7 @@
 // Kullanım (proje kökünde, iki ayrı terminalde):
 //   . .\env.ps1; wails dev
 //   . .\env.ps1; node frontend\e2e\similar.mjs [çıktı-klasörü]
-import { chromium } from 'playwright-core'
+import { launchBrowser } from './browser.mjs'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -16,11 +16,7 @@ const outDir = process.argv[2] ?? 'e2e-out'
 fs.mkdirSync(outDir, { recursive: true })
 const base = fs.mkdtempSync(path.join(os.tmpdir(), 'duplicatefile-similar-'))
 
-const edge = [
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-].find((p) => fs.existsSync(p))
-const browser = await chromium.launch({ executablePath: edge, headless: true })
+const browser = await launchBrowser()
 const page = await browser.newPage({ viewport: { width: 1100, height: 800 } })
 const errors = []
 const ignored = [/favicon\.ico/, /wails\/ipc\.js/]
@@ -61,7 +57,7 @@ async function drawImage(seed, w, h, type, quality) {
 }
 
 const write = (rel, buf) => {
-  const p = path.join(base, rel)
+  const p = path.join(base, ...rel.split(/[\\/]/))
   fs.mkdirSync(path.dirname(p), { recursive: true })
   fs.writeFileSync(p, buf)
   return p

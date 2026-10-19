@@ -2,7 +2,7 @@ package main
 
 import "runtime"
 
-// version, derlemede build.ps1 tarafından wails.json'daki info.productVersion
+// version, derlemede build.sh/build.ps1 tarafından wails.json'daki info.productVersion
 // ile doldurulur (-ldflags "-X main.version=..."). Doğrudan `wails build` ya
 // da `wails dev` ile "dev" kalır.
 var version = "dev"

@@ -7,7 +7,7 @@
 //
 // Klasör seçme diyaloğu otomatikleştirilemediği için seçenekler localStorage'a
 // önceden yazılır; test sonunda temizlenir.
-import { chromium } from 'playwright-core'
+import { launchBrowser } from './browser.mjs'
 import path from 'node:path'
 import fs from 'node:fs'
 
@@ -16,14 +16,7 @@ if (!scanRoot) {
   console.error('kullanım: node frontend/e2e/smoke.mjs <taranacak-klasör> [çıktı-klasörü]')
   process.exit(2)
 }
-const edge = [
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-].find((p) => fs.existsSync(p))
-fs.mkdirSync(outDir, { recursive: true })
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
-const browser = await chromium.launch({ executablePath: edge, headless: true })
+const browser = await launchBrowser()
 const page = await browser.newPage({ colorScheme: 'dark', viewport: { width: 1100, height: 760 } })
 
 // Yalnızca tarayıcıdan `wails dev` kullanırken çıkan, uygulamaya ait olmayan hatalar.

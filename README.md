@@ -1,6 +1,6 @@
 # DuplicateFile
 
-Windows için kopya ve benzer dosya bulucu. Klasörleri tarar, içeriği birebir aynı
+Windows ve macOS için kopya ve benzer dosya bulucu. Klasörleri tarar, içeriği birebir aynı
 dosyaları ya da birbirine benzeyen fotoğrafları gruplar; seçtiklerinizi güvenle
 silmenizi, taşımanızı ya da yeniden adlandırmanızı sağlar.
 
@@ -12,13 +12,29 @@ silmenizi, taşımanızı ya da yeniden adlandırmanızı sağlar.
   değişmeyen dosyalar bir sonraki taramada yeniden okunmaz.
 - Açık/koyu tema, pencere boyutuna uyan (responsive) Material arayüz.
 - Çok dilli: Türkçe, İngilizce, Almanca, Fransızca, Portekizce, Romence, Bulgarca
-  (Windows diline göre otomatik; yenileri dil dosyası eklenerek).
+  (sistemin diline göre otomatik; yenileri dil dosyası eklenerek).
 
 ---
 
 ## Kullanım
 
-### Kurulum
+### macOS kurulumu
+
+- **macOS 12 Monterey veya üzeri.** Apple Silicon (M serisi) ve Intel desteklenir;
+  Universal paket her ikisini de içerir. Alt sürüm sınırı [Go 1.26 gereksiniminden](https://go.dev/wiki/MinimumRequirements) gelir.
+- ZIP’i açın, **DuplicateFile.app** dosyasını **Uygulamalar** klasörüne sürükleyin ve açın.
+  Dil dosyaları uygulamanın içindedir; ayrıca `lang` klasörü taşımanız gerekmez.
+- WKWebView macOS ile gelir; WebView2 kurulumuna gerek yoktur.
+- Yerel derleme ad hoc imzalanır. Başka bilgisayarlara dağıtılacak paket için Apple
+  Developer ID imzası ve notarizasyon gerekir; yerel imza Apple onayı yerine geçmez.
+- macOS, seçtiğiniz Masaüstü, Belgeler, İndirilenler, harici disk veya ağ klasörüne
+  erişim için izin sorabilir. Klasör seçimi sistemin kendi penceresiyle yapılır.
+- Dosya gösterme düğmesi **Finder’da göster**, varsayılan silme **Çöp Sepeti’ne taşı**
+  olarak çalışır. Çöp Sepeti’ne taşıma başarısızsa dosya kalıcı silinmez.
+- Mac sistem yazı tipi, sürüklenebilir bütünleşik başlık, standart pencere düğmeleri,
+  yerel uygulama/Düzen menüleri ve **⌘C / ⌘V / ⌘X / ⌘Z / ⌘A / ⌘Q** kısayolları kullanılır.
+
+### Windows kurulumu
 
 Kurulum gerekmez: `DuplicateFile.exe`'yi ve yanındaki `lang` klasörünü istediğiniz
 klasöre koyup çalıştırın (`lang` olmadan da çalışır; arayüz İngilizce olur).
@@ -48,7 +64,7 @@ klasöre koyup çalıştırın (`lang` olmadan da çalışır; arayüz İngilizc
   görseller), *Klasördeki kopyaları seç*. Bu yardımcılar hiçbir grubun bütün
   dosyalarını seçmez.
 - Benzer görsel gruplarında **Karşılaştır**, görselleri büyük önizlemeyle yan yana gösterir.
-- Klasör simgesi dosyayı **Gezgin'de** gösterir.
+- Klasör simgesi dosyayı **Finder’da** (macOS) ya da **Gezgin’de** (Windows) gösterir.
 - Seçili dosyalar için:
   - **Sil** — varsayılan olarak **Geri Dönüşüm Kutusu'na** gönderir; kalıcı
     silme ayrıca işaretlenmelidir.
@@ -58,6 +74,20 @@ klasöre koyup çalıştırın (`lang` olmadan da çalışır; arayüz İngilizc
 
 ### Güvenlik
 
+- **Tarama kapsamı:** `/` gibi tüm diski kapsayan taramalar sistem ve uygulama
+  dosyalarını da sonuçlara dahil edebilir. Aynı içerik, dosyanın gereksiz olduğu
+  anlamına gelmez; farklı uygulamalar kendi kopyalarına ihtiyaç duyabilir.
+  Toplu temizliği Masaüstü, Belgeler, İndirilenler ve Resimler gibi kişisel
+  klasörlerle sınırlayın; `.app/Contents` ve sistem klasörlerindeki dosyaları
+  kopya olarak görünmeleri nedeniyle silmeyin. macOS’ta **Gizli ve sistem
+  dosyalarını atla** açıkken bilinen sistem klasörleri, kullanıcı Library klasörü
+  ve uygulama/arşiv paketleri tarama dışında bırakılır. Bu koruma tüm olası
+  uygulama veri dosyalarını tanımaz; kişisel klasörlerle sınırlı tarama önerilir.
+- **Mac uygulama koruması:** bilinen sistem yolları ve `.app`, `.framework`,
+  `.bundle`, Fotoğraflar arşivi gibi paketlerin içeriği, eski tarama sonuçlarından
+  seçilse dahi silinemez, taşınamaz veya yeniden adlandırılamaz. Bu konumlar
+  son kopya korumasında kişisel dosyanın yedeği sayılmaz. Aynı fiziksel dosyaya
+  çıkan farklı yollar da bağımsız bir yedek olarak kabul edilmez.
 - **Son kopya koruması:** bir dosya, diskte değişmeden duran bir eşi
   (birebir kopyası ya da benzer görsellerde eşik içindeki benzeri) kalmıyorsa
   **silinmez**. Bir grubun bütün dosyaları seçilse bile hepsi silinemez.
@@ -77,7 +107,7 @@ klasöre koyup çalıştırın (`lang` olmadan da çalışır; arayüz İngilizc
 
 ### Dil
 
-Arayüz dilleri exe'nin yanındaki **`lang`** klasöründen okunur:
+Windows’ta arayüz dilleri exe’nin yanındaki **`lang`** klasöründen okunur:
 
 ```
 DuplicateFile.exe
@@ -85,7 +115,7 @@ lang\
   tr.lng  de.lng  fr.lng  pt.lng  ro.lng  bg.lng  en.lng
 ```
 
-- Dil, Windows'un dil sırasına göre **otomatik** seçilir (ör. Windows Türkçeyse Türkçe).
+- Dil, işletim sisteminin dil sırasına göre **otomatik** seçilir (macOS’ta Sistem Ayarları → Dil ve Bölge).
   Ayarlar → Görünüm → **Dil** ile elle de seçilebilir.
 - `lang` klasörü yoksa ya da boşsa uygulama **İngilizce** çalışır (İngilizce programın içindedir).
 - Bir dil dosyasında eksik metin varsa o metin İngilizce gösterilir.
@@ -94,7 +124,24 @@ lang\
 
 Çeviriler (Türkçe dışındakiler) ana dili o dil olan biri tarafından gözden geçirilmemiştir.
 
+macOS’ta çeviriler `DuplicateFile.app/Contents/Resources/lang` içindedir. İmzalı bir
+uygulamanın içeriğini değiştirmek imzayı bozacağından, özel çeviriler için
+`DUPLICATEFILE_LANG_DIR` ile ayrı klasör kullanın.
+
 ### Verilerin konumu
+
+macOS:
+
+| Ne | Nerede |
+|---|---|
+| Veritabanı | `~/Library/Application Support/DuplicateFile/index.db` (Ayarlar’dan taşınabilir) |
+| Ayar dosyası | `~/Library/Application Support/DuplicateFile/config.json` |
+| WKWebView tercihleri | `~/Library/WebKit/com.duplicatefile.app` ve `~/Library/Preferences/com.duplicatefile.app.plist` |
+
+Veritabanı ve ayarlar sistemin silebildiği `Library/Caches` yerine kalıcı uygulama
+verileri klasöründedir.
+
+Windows:
 
 | Ne | Nerede |
 |---|---|
@@ -105,9 +152,9 @@ lang\
 `DUPLICATEFILE_DATA_DIR` ortam değişkeni tanımlıysa veritabanı ve ayar dosyası o
 klasörde tutulur (taşınabilir kullanım ve testler için).
 
-`DUPLICATEFILE_LANG_DIR` tanımlıysa dil dosyaları exe'nin yanı yerine o klasörden okunur.
+`DUPLICATEFILE_LANG_DIR` tanımlıysa dil dosyaları varsayılan konum yerine o klasörden okunur.
 
-Uygulamayı tamamen kaldırmak için exe'yi (ve yanındaki `lang` klasörünü) ve yukarıdaki klasörleri silmeniz yeterlidir.
+Uygulamayı tamamen kaldırmak için `.app` / `.exe` dosyasını (Windows’ta yanındaki `lang` klasörünü de) ve ilgili platformun yukarıdaki veri klasörlerini silmeniz yeterlidir.
 
 ### Bilinen sınırlar
 
@@ -125,9 +172,42 @@ Uygulamayı tamamen kaldırmak için exe'yi (ve yanındaki `lang` klasörünü) 
 ## Geliştirme
 
 Go + [Wails v2](https://wails.io) arka uç, React + TypeScript + [MUI](https://mui.com) arayüz,
-SQLite (saf Go, `modernc.org/sqlite`; CGO gerekmez).
+SQLite (saf Go, `modernc.org/sqlite`). Masaüstü kabuğu ve macOS’un yerel Foundation bağlantısı CGO kullanır.
 
-### Ortam
+### macOS geliştirme
+
+Gerekenler: **Go 1.26.x**, **Node.js 22.13+** (24 LTS önerilir), npm ve Xcode
+Command Line Tools. Geliştirme araçları kullanıcı ortamında ya da `.tools/go`,
+`.tools/bin` altında bulunabilir; sistem ayarları değiştirilmez.
+
+```bash
+xcode-select --install  # araçlar kurulu değilse, bir kez
+source ./env.sh
+go install github.com/wailsapp/wails/v2/cmd/wails@v2.16.0
+wails dev
+```
+
+`env.sh`, Bash ve zsh ile kaynaklanabilir. Go/npm önbelleklerini proje içinde
+saklar ve geliştirmede dil dosyalarını doğrudan `lang/` klasöründen okutur.
+
+```bash
+./build.sh                 # bu Mac’in mimarisi, testler dahil
+./build.sh --universal     # Apple Silicon + Intel, tek .app
+./build.sh --arch amd64    # yalnızca Intel
+./build.sh --skip-tests    # testleri atla
+```
+
+Çıktı: **`build/bin/DuplicateFile.app`** ve sürüm/mimari adlı ZIP.
+Betik kilitli npm bağımlılıklarını kurar, arayüzü derler, Go vet/test ve arayüz
+testlerini çalıştırır; dilleri pakete koyar, son paketi imzalayıp doğrular.
+`wails.json` sürümün tek kaynağıdır. Universal derleme macOS üzerinde yapılır.
+Yalnızca yerel deneme için ad hoc imza kullanılır; Developer ID ile imzalamak için
+`DUPLICATEFILE_SIGN_IDENTITY` tanımlanabilir. Dağıtım için ayrıca Apple notarizasyonu gerekir.
+
+Temiz klonda `go test ./...` öncesi `cd frontend && npm ci && npm run build`
+çalışmalıdır; Go arayüz dosyalarını içine gömer. `build.sh` bu sırayı otomatik uygular.
+
+### Windows ortamı
 
 Araçlar sisteme kurulmaz; proje içindeki `.tools\` klasöründe taşınabilir olarak durur
 (Go, Node.js, Wails CLI, Git, önbellekler). Her terminalde önce:
@@ -154,11 +234,11 @@ yerel betiklere izin vermek isterseniz bir kez `Set-ExecutionPolicy -Scope Curre
 `UserPolicy` doluysa politika Group Policy ile belirlenmiştir ve bu komutlarla değiştirilemez.
 
 Bu yalnızca o terminal oturumunun `PATH`'ini ayarlar. `.tools\` yoksa (ör. depoyu yeni
-klonladıysanız): Go ve Node.js'in resmi Windows **zip** sürümlerini `.tools\go` ve
+klonladıysanız): Go 1.26 ve Node.js 22.13+’ın resmi Windows **zip** sürümlerini `.tools\go` ve
 `.tools\node` klasörlerine, isterseniz Git for Windows **PortableGit**'i `.tools\git`
 klasörüne açın; sonra `go install github.com/wailsapp/wails/v2/cmd/wails@latest`.
 
-### Çalıştırma ve derleme
+### Windows çalıştırma ve derleme
 
 ```powershell
 wails dev          # canlı geliştirme (arayüz değişiklikleri anında yansır)
@@ -177,7 +257,7 @@ go test ./...                       # Go birim testleri
 cd frontend; npm test               # arayüz mantığı (node --test)
 ```
 
-Uçtan uca testler kurulu Edge'i `playwright-core` ile sürer ve `wails dev`
+Uçtan uca testler kurulu Chrome/Edge’i `playwright-core` ile sürer ve `wails dev`
 sunucusuna bağlanır (ayrı terminalde `wails dev` çalışırken):
 
 ```powershell
@@ -191,7 +271,27 @@ $env:DUPLICATEFILE_DATA_DIR = "<boş klasör>"; wails dev
 node frontend\e2e\settings.mjs "<aynı klasör>"
 ```
 
-Gerçek Geri Dönüşüm Kutusu testi yalnızca istenince çalışır:
+macOS’ta uçtan uca testleri ayrı terminalde aynı şekilde çalıştırabilirsiniz:
+
+```bash
+# Terminal 1: yalnızca geçici test verisi
+source ./env.sh
+DUPLICATEFILE_DATA_DIR="$PWD/.tools/e2e-data" wails dev
+# Terminal 2
+node frontend/e2e/fileops.mjs
+node frontend/e2e/similar.mjs
+node frontend/e2e/language.mjs with-lang
+node frontend/e2e/macos.mjs  # Mac tema, klavye, Finder/Çöp Sepeti metinleri
+node frontend/e2e/settings.mjs "$PWD/.tools/e2e-data"
+```
+
+Chrome/Edge standart konumda değilse `DUPLICATEFILE_BROWSER` ile çalıştırılabilir
+programın tam yolunu verin. Ekran görüntüleri `e2e-out/` içine yazılır.
+Gerçek Çöp Sepeti testi yalnızca istenince çalışır ve geçici bir test dosyasını
+Çöp Sepeti’nde bırakır:
+`DUPLICATEFILE_TEST_RECYCLE=1 go test ./internal/fileops -run MacRecycleIntegration`.
+
+Gerçek Windows Geri Dönüşüm Kutusu testi yalnızca istenince çalışır:
 `$env:DUPLICATEFILE_TEST_RECYCLE = "1"; go test ./internal/fileops -run Recycle`
 
 ### Dil desteği (geliştirici)
@@ -202,6 +302,7 @@ Gerçek Geri Dönüşüm Kutusu testi yalnızca istenince çalışır:
 - Yeni metin eklendiğinde: `en.ts`'e ekleyin → `cd frontend; npm run lang:en` (`lang/en.lng`'yi
   üretir) → diğer `lang/*.lng` dosyalarına çevirisini ekleyin. `npm test` her dosyada eksik/fazla
   anahtar, yer tutucu ve çoğul eki uyumunu denetler.
+- macOS’a özgü metinler `.mac` ekiyle tanımlanır (ör. `file.showInExplorer.mac`, çoğulda `outcome.recycled.mac.other`); diğer platformlar temel anahtarı kullanır.
 - Go'nun arayüzde gösterilen hataları `[kod] İngilizce açıklama` biçimindedir
   (`internal/apperr`); arayüz kodu `error.<kod>` anahtarıyla çevirir.
 - `wails dev` sırasında dil dosyaları `build\bin\lang`'dan okunur (`build.ps1` kopyalar) ya da
@@ -233,11 +334,20 @@ internal/db            SQLite şeması, migration'lar, sorgular
 internal/scanner       tarama motoru (birebir + benzer görsel)
 internal/imaging       dHash ve küçük resim
 internal/fileops       silme / taşıma / yeniden adlandırma + son kopya koruması
-internal/i18n          .lng dil dosyaları ve Windows dil tercihi
+internal/i18n          .lng dil dosyaları ve sistem dil tercihi
+internal/macos         Foundation: Çöp Sepeti, sistem dili ve tema
+internal/pathutil      platforma uygun dosya yolu karşılaştırması
+internal/appdirs       platforma uygun kalıcı veri klasörü
 internal/apperr        arayüze giden kodlu hatalar
-lang/                  dil dosyaları (build.ps1 exe'nin yanına kopyalar)
+lang/                  dil dosyaları (build.sh .app içine, build.ps1 exe yanına kopyalar)
 cmd/scancli            tarama motorunu arayüzsüz deneme ve ölçme aracı
 cmd/genicon            uygulama simgesini (build/appicon.png) çizer
 frontend/src           React arayüzü (api.ts: Go ile tek bağlantı noktası)
 frontend/e2e           uçtan uca testler
 ```
+
+macOS taramalarında `.Trash`, `.Trashes`, `.Spotlight-V100` ve `.fseventsd`
+klasörleri her zaman atlanır. Gizli dosya filtresi noktalı adlara ek olarak Finder’ın
+`hidden` bayrağını da dikkate alır; seçenek açıkken sistem klasörleri ve uygulama paketleri de atlanır. Unix yollarında harf büyüklüğü korunur; harfe
+duyarlı APFS birimlerinde `Foto` ve `foto` ayrı dizinlerdir. Veritabanı v3 migration’ı
+mevcut önbelleği koruyarak platforma uygun karşılaştırmayı uygular.
